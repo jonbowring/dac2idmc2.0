@@ -1,0 +1,10 @@
+2025-02-10 15:23:07,644:INFO:Reading the config file
+2025-02-10 15:23:07,662:INFO:Reading the execution plans
+2025-02-10 15:23:07,679:INFO:Logging into IDMC
+2025-02-10 15:23:07,680:DEBUG:Starting new HTTPS connection (1): dmp-us.informaticacloud.com:443
+2025-02-10 15:23:08,655:DEBUG:https://dmp-us.informaticacloud.com:443 "POST /saas/public/core/v3/login HTTP/1.1" 200 386
+2025-02-10 15:23:08,819:INFO:Getting the secure agent ID
+2025-02-10 15:23:08,820:DEBUG:Starting new HTTPS connection (1): usw1.dmp-us.informaticacloud.com:443
+2025-02-10 15:23:09,537:DEBUG:https://usw1.dmp-us.informaticacloud.com:443 "GET /saas/api/v2/runtimeEnvironment/name/AUW487V7S3-AAD HTTP/1.1" 200 None
+2025-02-10 15:23:09,628:INFO:Getting a list of the mapping tasks
+2025-02-10 15:23:10,011:DEBUG:https://usw1.dmp-us.informaticacloud.com:443 "GET /saas/public/core/v3/objects?q=type==%27MTT%27&limit=200&skip=0 HTTP/1.1" 200 None

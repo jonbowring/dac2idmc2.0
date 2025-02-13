@@ -297,3 +297,4 @@
 2025-02-13 15:57:13,759:DEBUG:Starting new HTTPS connection (1): usw1.dmp-us.informaticacloud.com:443
 2025-02-13 15:57:14,448:DEBUG:https://usw1.dmp-us.informaticacloud.com:443 "GET /saas/api/v2/runtimeEnvironment/name/AUW487V7S3-AAD HTTP/1.1" 200 None
 2025-02-13 15:57:14,558:INFO:Getting a list of the mapping tasks
+2025-02-13 15:57:14,934:DEBUG:https://usw1.dmp-us.informaticacloud.com:443 "GET /saas/public/core/v3/objects?q=type==%27MTT%27&limit=200&skip=0 HTTP/1.1" 200 None

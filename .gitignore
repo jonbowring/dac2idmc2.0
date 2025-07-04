@@ -9,3 +9,5 @@
 !/tmp/.gitkeep
 /logs/*
 !/logs/.gitkeep
+/idmc_utils/__pycache__/
+/idmc_utils/__pycache__/*

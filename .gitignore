@@ -1,5 +1,6 @@
 # Ignore the following directories
 /config/
 /in/
-/out/
+/out/*
+/tmp/*
 logs/console.log

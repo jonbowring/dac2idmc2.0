@@ -1,4 +1,11 @@
 # Ignore the following directories
-/config/
-/in/
-/out/
+/config/*
+!/config/.gitkeep
+/in/*
+!/in/.gitkeep
+/out/*
+!/out/.gitkeep
+/tmp/*
+!/tmp/.gitkeep
+/logs/*
+!/logs/.gitkeep

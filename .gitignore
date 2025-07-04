@@ -1,5 +1,5 @@
 # Ignore the following directories
-/config/
+/config/*
 !/config/.gitkeep
 /in/*
 !/in/.gitkeep

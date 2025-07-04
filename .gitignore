@@ -1,6 +1,11 @@
 # Ignore the following directories
 /config/
+!/config/.gitkeep
 /in/
+!/in/.gitkeep
 /out/*
+!/out/.gitkeep
 /tmp/*
-logs/console.log
+!/tmp/.gitkeep
+/logs/*
+!/logs/.gitkeep

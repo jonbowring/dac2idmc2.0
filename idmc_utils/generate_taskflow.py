@@ -1,8 +1,9 @@
 from lxml import etree
 import uuid
+import re
 import logging
 
-def generate_taskflow(taskflowID, taskflowName):
+def generate_taskflow(taskflowID, taskflowName, dfPlan):
 
 
     # Initialise the log file
@@ -14,6 +15,11 @@ def generate_taskflow(taskflowID, taskflowName):
 
     logging.info('Starting to generate the Taskflow XML files')
 
+    # Get the unique list of step orders
+    dfPlan = dfPlan.sort_values('plan_step_order')
+    order_list = dfPlan['plan_step_order'].unique()
+    dfTempFields = dfPlan[['plan_step_type','step_name','infa_id','infa_path']].copy()
+    dfTempFields = dfTempFields[dfTempFields['plan_step_type'] == 'REGULAR'].drop_duplicates()
 
     #taskflowName = 'tf_Generated_Taskflow'
     #taskflowName
@@ -30,6 +36,14 @@ def generate_taskflow(taskflowID, taskflowName):
     # ## /aetgt:getResponse
     ######################################################################################
 
+    '''
+    <aetgt:getResponse xmlns:aetgt="http://schemas.active-endpoints.com/appmodules/repository/2010/10/avrepository.xsd"
+                   xmlns:types1="http://schemas.active-endpoints.com/appmodules/repository/2010/10/avrepository.xsd">
+        <types1:Item>
+        </types1:Item>
+        <types1:CurrentServerDateTime>2025-07-04T05:15:19.236Z</types1:CurrentServerDateTime>
+    </aetgt:getResponse>
+    '''
 
     logging.info('Building "/aetgt:getResponse" elements...')
 
@@ -53,6 +67,28 @@ def generate_taskflow(taskflowID, taskflowName):
     # ## /aetgt:getResponse/types1:Item
     ######################################################################################
 
+    '''
+    <types1:Item>
+        <types1:EntryId>pJ7XhFtybduaa-gt-185706-2025-07-04T02:45:06.256Z::tf.xml</types1:EntryId>
+        <types1:Name>tf_Base_Taskflow</types1:Name>
+        <types1:MimeType>application/xml+taskflow</types1:MimeType>
+        <types1:Description/>
+        <types1:AppliesTo/>
+        <types1:Tags/>
+        <types1:VersionLabel>1.0</types1:VersionLabel>
+        <types1:State>CURRENT</types1:State>
+        <types1:ProcessGroup/>
+        <types1:CreatedBy>jbowring_APJS_tspod_SO</types1:CreatedBy>
+        <types1:CreationDate>2025-07-04T02:45:06Z</types1:CreationDate>
+        <types1:ModifiedBy>jbowring_APJS_tspod_SO</types1:ModifiedBy>
+        <types1:ModificationDate>2025-07-04T05:14:59Z</types1:ModificationDate>
+        <types1:PublicationStatus>unpublished</types1:PublicationStatus>
+        <types1:Entry>
+        </types1:Entry>
+        <types1:GUID>0MMbu6TFO6Wfp2SONVzaQi</types1:GUID>
+        <types1:DisplayName>tf_Base_Taskflow</types1:DisplayName>
+    </types1:Item>
+    '''
 
     logging.info('Building "/aetgt:getResponse/types1:Item" elements...')
 
@@ -139,6 +175,18 @@ def generate_taskflow(taskflowID, taskflowName):
     # ## /aetgt:getResponse/types1:Item/types1:Entry
     ######################################################################################
 
+    '''
+    <types1:Entry>
+        <taskflow xmlns="http://schemas.active-endpoints.com/appmodules/screenflow/2010/10/avosScreenflow.xsd"
+            xmlns:tfm="http://schemas.active-endpoints.com/appmodules/screenflow/2021/04/taskflowModel.xsd"
+            xmlns:list="urn:activevos:spi:list:functions"
+            displayName="tf_Base_Taskflow"
+            name="tf_Base_Taskflow"
+            overrideAPIName="false">
+        </taskflow>
+    </types1:Entry>
+    '''
+
 
     logging.info('Building "/aetgt:getResponse/types1:Item/types1:Entry" elements...')
 
@@ -160,6 +208,37 @@ def generate_taskflow(taskflowID, taskflowName):
     # ## /aetgt:getResponse/types1:Item/types1:Entry/taskflow
     ######################################################################################
 
+    '''
+    <taskflow xmlns="http://schemas.active-endpoints.com/appmodules/screenflow/2010/10/avosScreenflow.xsd"
+            xmlns:tfm="http://schemas.active-endpoints.com/appmodules/screenflow/2021/04/taskflowModel.xsd"
+            xmlns:list="urn:activevos:spi:list:functions"
+            displayName="tf_Base_Taskflow"
+            name="tf_Base_Taskflow"
+            overrideAPIName="false">
+        <parameterSet xmlns="http://schemas.active-endpoints.com/appmodules/screenflow/2021/04/taskflowModel.xsd"/>
+        <appliesTo/>
+        <description/>
+        <tags/>
+        <generator>Informatica Process Designer 11</generator>
+        <tempFields>
+                </tempFields>
+        <notes/>
+        <deployment skipIfRunning="false"
+                    suspendOnFault="false"
+                    tracingLevel="verbose">
+            <rest/>
+        </deployment>
+        <extData>
+            <nvpair name="treatEmptyStringAsNotNull">false</nvpair>
+            <nvpair name="treatEmptyObjectListAsArray">false</nvpair>
+        </extData>
+        <flow id="a">
+                </flow>
+        <dependencies>
+                </dependencies>
+    </taskflow>
+    '''
+
 
     logging.info('Building "/aetgt:getResponse/types1:Item/types1:Entry/taskflow" elements...')
 
@@ -180,6 +259,67 @@ def generate_taskflow(taskflowID, taskflowName):
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/generator" element
     getResponse_Item_Entry_taskflow_generator = etree.SubElement(getResponse_Item_Entry_taskflow, "generator")
     getResponse_Item_Entry_taskflow_generator.text = "Informatica Process Designer 11"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/tempFields" element
+    getResponse_Item_Entry_taskflow_tempFields = etree.SubElement(getResponse_Item_Entry_taskflow, "tempFields")
+
+    ######################################################################################
+    # ## /aetgt:getResponse/types1:Item/types1:Entry/taskflow/tempFields
+    ######################################################################################
+
+    '''
+    <tempFields>
+        <field description=""
+                name="SDE_ORA_EmployeeDailySnapshotFact_2"
+                type="reference">
+            <options>
+                <option name="failOnNotRun">false</option>
+                <option name="failOnFault">false</option>
+                <option name="referenceTo">$po:SDE-ORA-EmployeeDailySnapshotFact-2-a0Ks8uNXYKLg38LRNzw6gv</option>
+            </options>
+        </field>
+    </tempFields>
+    '''
+
+    #TODO add loop to add field for each unique MTT
+    for idx, row in dfTempFields.iterrows():
+
+        step_name = row['step_name']
+        infa_id = row['infa_id']
+        
+        # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/tempFields/field" element
+        getResponse_Item_Entry_taskflow_tempFields_field = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields, "field", attrib={
+            "description": "",
+            "name": step_name, 
+            "type": "reference"
+        })
+
+        # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/tempFields/options" element
+        getResponse_Item_Entry_taskflow_tempFields_options = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_field, "options")
+
+        # Create the "/aetgt:getResponse/types1:Item/types1:Entry/tempFields/options/option" element
+        getResponse_Item_Entry_taskflow_tempFields_options_option1 = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_options, "option", attrib={
+            "name": "failOnNotRun"
+        })
+        getResponse_Item_Entry_taskflow_tempFields_options_option1.text = "false"
+
+        # Create the "/aetgt:getResponse/types1:Item/types1:Entry/tempFields/options/option" element
+        getResponse_Item_Entry_taskflow_tempFields_options_option2 = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_options, "option", attrib={
+            "name": "failOnFault"
+        })
+        getResponse_Item_Entry_taskflow_tempFields_options_option2.text = "false"
+
+        # Create the "/aetgt:getResponse/types1:Item/types1:Entry/tempFields/options/option" element
+        getResponse_Item_Entry_taskflow_tempFields_options_option3 = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_options, "option", attrib={
+            "name": "referenceTo"
+        })
+        #TODO update reference name and ID
+        getResponse_Item_Entry_taskflow_tempFields_options_option3.text = f"$po:{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
+
+
+    ######################################################################################
+    # ## /aetgt:getResponse/types1:Item/types1:Entry/taskflow
+    ######################################################################################
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/notes" element
     getResponse_Item_Entry_taskflow_notes = etree.SubElement(getResponse_Item_Entry_taskflow, "notes")
@@ -244,6 +384,24 @@ def generate_taskflow(taskflowID, taskflowName):
     ######################################################################################
     # ## /aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow
     ######################################################################################
+
+    '''
+    <flow id="a">
+        <start id="b">
+            <link id="mcoczikm"
+                targetId="mcoczil9"/>
+        </start>
+        <eventContainer id="mcoczil9">
+        <service id="mcoczikl">
+        </service>
+        <link id="mcoczikn"
+                targetId="c"/>
+        <events>
+        </events>
+        </eventContainer>
+        <end id="c"/>
+    </flow>
+    '''
 
 
     logging.info('Building "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow" elements...')

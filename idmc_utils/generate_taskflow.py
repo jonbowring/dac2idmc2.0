@@ -18,8 +18,8 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
     # Get the unique list of step orders
     dfPlan = dfPlan.sort_values('plan_step_order')
     order_list = dfPlan['plan_step_order'].unique()
-    dfTempFields = dfPlan[['plan_step_type','step_name','infa_id','infa_path']].copy()
-    dfTempFields = dfTempFields[dfTempFields['plan_step_type'] == 'REGULAR'].drop_duplicates()
+    dfMtts = dfPlan[['plan_step_type','step_name','infa_id','infa_path']].copy()
+    dfMtts = dfMtts[dfMtts['plan_step_type'] == 'REGULAR'].drop_duplicates()
 
     #taskflowName = 'tf_Generated_Taskflow'
     #taskflowName
@@ -282,7 +282,7 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
     '''
 
     #TODO add loop to add field for each unique MTT
-    for idx, row in dfTempFields.iterrows():
+    for idx, row in dfMtts.iterrows():
 
         step_name = row['step_name']
         infa_id = row['infa_id']
@@ -435,6 +435,116 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
     getResponse_Item_Entry_taskflow_flow_end = etree.SubElement(getResponse_Item_Entry_taskflow_flow, "end", attrib={
         "id": "c"
     })
+
+    ######################################################################################
+    # ## /aetgt:getResponse/types1:Item/types1:Entry/taskflow
+    ######################################################################################
+
+
+    logging.info('Building "/aetgt:getResponse/types1:Item/types1:Entry/taskflow" elements...')
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies" element
+    getResponse_Item_Entry_taskflow_dependencies = etree.SubElement(getResponse_Item_Entry_taskflow, "dependencies")
+
+    ######################################################################################
+    # ## /aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies
+    ######################################################################################
+
+    '''
+    <dependencies>
+        <processObject xmlns="http://schemas.active-endpoints.com/appmodules/screenflow/2011/06/avosHostEnvironment.xsd"
+                        displayName="SDE-ORA-EmployeeDailySnapshotFact-2-a0Ks8uNXYKLg38LRNzw6gv"
+                        isByCopy="true"
+                        name="SDE-ORA-EmployeeDailySnapshotFact-2-a0Ks8uNXYKLg38LRNzw6gv">
+            <description/>
+            <tags/>
+            <detail>
+                <field label="TaskProperties Parameters"
+                    name="taskProperties"
+                    nullable="true"
+                    required="false"
+                    type="reference"/>
+                <field label="Output Parameters"
+                    name="output"
+                    nullable="true"
+                    required="false"
+                    type="reference"/>
+                <field label="Fault"
+                    name="fault"
+                    nullable="true"
+                    required="false"
+                    type="reference"/>
+                <field label="Max Wait (Seconds)"
+                    name="Max_Wait"
+                    nullable="true"
+                    required="false"
+                    type="int"/>
+            </detail>
+        </processObject>
+    </dependencies>
+    '''
+
+
+    logging.info('Building "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies" elements...')
+
+    # Add dependencies for each session
+    for idx, row in dfMtts.iterrows():
+
+        step_name = row['step_name']
+        infa_id = row['infa_id']
+        
+        # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies/processObject" element
+        getResponse_Item_Entry_taskflow_dependencies_processObject = etree.SubElement(getResponse_Item_Entry_taskflow_dependencies, "processObject", attrib={
+            "xmlns": "http://schemas.active-endpoints.com/appmodules/screenflow/2011/06/avosHostEnvironment.xsd",
+            "displayName": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }",
+            "isByCopy": "true",
+            "name": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
+        })
+
+        # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies/processObject/description" element
+        getResponse_Item_Entry_taskflow_dependencies_processObject_description = etree.SubElement(getResponse_Item_Entry_taskflow_dependencies_processObject, "description")
+
+        # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies/processObject/tags" element
+        getResponse_Item_Entry_taskflow_dependencies_processObject_tags = etree.SubElement(getResponse_Item_Entry_taskflow_dependencies_processObject, "tags")
+
+        # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies/processObject/detail" element
+        getResponse_Item_Entry_taskflow_dependencies_processObject_detail = etree.SubElement(getResponse_Item_Entry_taskflow_dependencies_processObject, "detail")
+
+        # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies/processObject/detail/field" element
+        getResponse_Item_Entry_taskflow_dependencies_processObject_detail_field1 = etree.SubElement(getResponse_Item_Entry_taskflow_dependencies_processObject_detail, "field", attrib={
+            "label": "TaskProperties Parameters",
+            "name": "taskProperties",
+            "nullable": "true",
+            "required": "false",
+            "type": "reference"
+        })
+
+        # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies/processObject/detail/field" element
+        getResponse_Item_Entry_taskflow_dependencies_processObject_detail_field2 = etree.SubElement(getResponse_Item_Entry_taskflow_dependencies_processObject_detail, "field", attrib={
+            "label": "Output Parameters",
+            "name": "output",
+            "nullable": "true",
+            "required": "false",
+            "type": "reference"
+        })
+
+        # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies/processObject/detail/field" element
+        getResponse_Item_Entry_taskflow_dependencies_processObject_detail_field3 = etree.SubElement(getResponse_Item_Entry_taskflow_dependencies_processObject_detail, "field", attrib={
+            "label": "Fault",
+            "name": "fault",
+            "nullable": "true",
+            "required": "false",
+            "type": "reference"
+        })
+
+        # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies/processObject/detail/field" element
+        getResponse_Item_Entry_taskflow_dependencies_processObject_detail_field4 = etree.SubElement(getResponse_Item_Entry_taskflow_dependencies_processObject_detail, "field", attrib={
+            "label": "Max Wait (Seconds)",
+            "name": "Max_Wait",
+            "nullable": "true",
+            "required": "false",
+            "type": "int"
+        })
 
     ######################################################################################
     # ## /aetgt:getResponse/types1:Item

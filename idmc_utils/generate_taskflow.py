@@ -320,8 +320,8 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
         getResponse_Item_Entry_taskflow_tempFields_options_option3 = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_options, "option", attrib={
             "name": "referenceTo"
         })
-        #getResponse_Item_Entry_taskflow_tempFields_options_option3.text = f"$po:{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
-        getResponse_Item_Entry_taskflow_tempFields_options_option3.text = f"$po:{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }"
+        getResponse_Item_Entry_taskflow_tempFields_options_option3.text = f"$po:{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
+        #getResponse_Item_Entry_taskflow_tempFields_options_option3.text = f"$po:{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }"
 
 
     ######################################################################################
@@ -588,8 +588,8 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
             # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
             getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param7_operation = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param7, "operation", attrib={
                 "source": "field",
-                #"to": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
-                "to": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }"
+                "to": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
+                #"to": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }"
             })
             getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param7_operation.text = f"temp.{ step_name }"
 
@@ -840,11 +840,11 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
         # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies/processObject" element
         getResponse_Item_Entry_taskflow_dependencies_processObject = etree.SubElement(getResponse_Item_Entry_taskflow_dependencies, "processObject", attrib={
             "xmlns": "http://schemas.active-endpoints.com/appmodules/screenflow/2011/06/avosHostEnvironment.xsd",
-            #"displayName": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }",
-            "displayName": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }",
+            "displayName": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }",
+            #"displayName": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }",
             "isByCopy": "true",
-            #"name": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
-            "name": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }"
+            "name": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
+            #"name": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }"
         })
 
         # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies/processObject/description" element

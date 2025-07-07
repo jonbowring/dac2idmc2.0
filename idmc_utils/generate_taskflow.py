@@ -4,8 +4,307 @@ import shortuuid
 import re
 import logging
 
-def generate_taskflow(taskflowID, taskflowName, dfPlan):
+def add_task(parent, infa_id, step_id, step_name, next_id, create_link):
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer = etree.SubElement(parent, "eventContainer", attrib={
+        "id": step_id
+    })
 
+    '''
+    <service id="mcoczikl">
+        <title>SDE_ORA_EmployeeDailySnapshotFact_2</title>
+        <serviceName>ICSExecuteDataTask</serviceName>
+        <serviceGUID/>
+        <serviceInput>
+            ...
+        </serviceInput>
+        <serviceOutput>
+            ...
+        </serviceOutput>
+    </service>
+    '''
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer, "service", attrib={
+        #"id": str(uuid.uuid4()).replace('-','')
+        "id": "svc" + shortuuid.uuid()[:8]
+    })
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/title" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_title = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service, "title")
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_title.text = step_name
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceName" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceName = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service, "serviceName")
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceName.text = "ICSExecuteDataTask"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceGUID" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceGUID = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service, "serviceGUID")
+
+    '''
+    <serviceInput>
+        <parameter name="Wait for Task to Complete" source="constant" updatable="true">true</parameter>
+        <parameter name="Max Wait" source="constant" updatable="true">604800</parameter>
+        <parameter name="Task Name" source="constant" updatable="true">SDE_ORA_EmployeeDailySnapshotFact_2</parameter>
+        <parameter name="GUID" source="constant" updatable="true">a0Ks8uNXYKLg38LRNzw6gv</parameter>
+        <parameter name="Task Type" source="constant" updatable="true">MCT</parameter>
+        <parameter name="Has Inout Parameters" source="constant" updatable="true">false</parameter>
+        <parameter name="taskField" source="nested">
+            <operation source="field"
+                        to="SDE-ORA-EmployeeDailySnapshotFact-2-a0Ks8uNXYKLg38LRNzw6gv">temp.SDE_ORA_EmployeeDailySnapshotFact_2</operation>
+        </parameter>
+    </serviceInput>
+    '''
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service, "serviceInput")
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param1 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput, "parameter", attrib={
+        "name": "Wait for Task to Complete",
+        "source": "constant",
+        "updatable": "true"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param1.text = "true"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param2 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput, "parameter", attrib={
+        "name": "Max Wait",
+        "source": "constant",
+        "updatable": "true"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param2.text = "604800"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param3 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput, "parameter", attrib={
+        "name": "Task Name",
+        "source": "constant",
+        "updatable": "true"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param3.text = step_name
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param4 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput, "parameter", attrib={
+        "name": "GUID",
+        "source": "constant",
+        "updatable": "true"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param4.text = infa_id
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param5 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput, "parameter", attrib={
+        "name": "Task Type",
+        "source": "constant",
+        "updatable": "true"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param5.text = "MCT"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param6 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput, "parameter", attrib={
+        "name": "Has Inout Parameters",
+        "source": "constant",
+        "updatable": "true"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param6.text = "false"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param7 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput, "parameter", attrib={
+        "name": "taskField",
+        "source": "nested"
+    })
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param7_operation = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param7, "operation", attrib={
+        "source": "field",
+        "to": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
+        #"to": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param7_operation.text = f"temp.{ step_name }"
+
+    '''
+    <serviceOutput>
+        <operation source="field"
+                    to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Object_Name">Object Name</operation>
+        <operation source="field"
+                    to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Run_Id">Run Id</operation>
+        <operation source="field"
+                    to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Log_Id">Log Id</operation>
+        <operation source="field"
+                    to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Task_Id">Task Id</operation>
+        <operation source="field"
+                    to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Task_Status">Task Status</operation>
+        <operation source="field"
+                    to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Success_Source_Rows">Success Source Rows</operation>
+        <operation source="field"
+                    to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Failed_Source_Rows">Failed Source Rows</operation>
+        <operation source="field"
+                    to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Success_Target_Rows">Success Target Rows</operation>
+        <operation source="field"
+                    to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Failed_Target_Rows">Failed Target Rows</operation>
+        <operation source="field"
+                    to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Start_Time">Start Time</operation>
+        <operation source="field"
+                    to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/End_Time">End Time</operation>
+        <operation source="field"
+                    to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Error_Message">Error Message</operation>
+        <operation source="field"
+                    to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/TotalTransErrors">Total Transformation Errors</operation>
+        <operation source="field"
+                    to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/FirstErrorCode">First Error Code</operation>
+    </serviceOutput>
+    '''
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceOutput" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service, "serviceOutput")
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation1 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
+        "source": "field",
+        "to": f"temp.{ step_name }/output/Object_Name"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation1.text = "Object Name"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation2 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
+        "source": "field",
+        "to": f"temp.{ step_name }/output/Run_Id"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation2.text = "Run Id"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation3 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
+        "source": "field",
+        "to": f"temp.{ step_name }/output/Log_Id"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation3.text = "Log Id"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation4 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
+        "source": "field",
+        "to": f"temp.{ step_name }/output/Task_Id"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation4.text = "Task Id"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation5 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
+        "source": "field",
+        "to": f"temp.{ step_name }/output/Task_Status"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation5.text = "Task Status"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation6 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
+        "source": "field",
+        "to": f"temp.{ step_name }/output/Success_Source_Rows"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation6.text = "Success Source Rows"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation7 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
+        "source": "field",
+        "to": f"temp.{ step_name }/output/Failed_Source_Rows"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation7.text = "Failed Source Rows"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation8 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
+        "source": "field",
+        "to": f"temp.{ step_name }/output/Success_Target_Rows"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation8.text = "Success Target Rows"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation9 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
+        "source": "field",
+        "to": f"temp.{ step_name }/output/Failed_Target_Rows"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation9.text = "Failed Target Rows"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation10 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
+        "source": "field",
+        "to": f"temp.{ step_name }/output/Start_Time"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation10.text = "Start Time"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation11 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
+        "source": "field",
+        "to": f"temp.{ step_name }/output/End_Time"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation11.text = "End Time"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation12 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
+        "source": "field",
+        "to": f"temp.{ step_name }/output/Error_Message"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation12.text = "Error Message"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation13 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
+        "source": "field",
+        "to": f"temp.{ step_name }/output/TotalTransErrors"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation13.text = "Total Transformation Errors"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation14 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
+        "source": "field",
+        "to": f"temp.{ step_name }/output/FirstErrorCode"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation14.text = "First Error Code"
+
+    '''
+    <link id="mcoczikn" targetId="c"/>
+    <events>
+        <catch faultField="temp.SDE_ORA_EmployeeDailySnapshotFact_2/fault"
+            id="mcoczil7"
+            interrupting="true"
+            name="error">
+        <suspend/>
+        </catch>
+        <catch faultField="temp.SDE_ORA_EmployeeDailySnapshotFact_2/fault"
+            id="mcoczil8"
+            interrupting="true"
+            name="warning"/>
+    </events>
+    '''
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/link" element
+    if create_link:
+        targetId = next_id
+        getResponse_Item_Entry_taskflow_flow_eventContainer_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer, "link", attrib={
+            #"id": str(uuid.uuid4()).replace('-',''),
+            "id": "link" + shortuuid.uuid()[:8],
+            "targetId": targetId if targetId is not None else 'end'
+        })
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/events" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_events = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer, "events")
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/events/catch" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_events_catch1 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_events, "catch", attrib={
+        "faultField": f"temp.{ step_name }/fault",
+        #"id": str(uuid.uuid4()).replace('-',''),
+        "id": "catch" + shortuuid.uuid()[:8],
+        "interrupting": "true",
+        "name": "error"
+    })
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/events/catch/suspend" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_events_catch1_suspend = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_events_catch1, "suspend")
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/events/catch" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_events_catch2 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_events, "catch", attrib={
+        "faultField": f"temp.{ step_name }/fault",
+        #"id": str(uuid.uuid4()).replace('-',''),
+        "id": "catch" + shortuuid.uuid()[:8],
+        "interrupting": "true",
+        "name": "warning"
+    })
+
+def generate_taskflow(taskflowID, taskflowName, dfPlan):
 
     # Initialise the log file
     logging.basicConfig(
@@ -17,7 +316,6 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
     logging.info('Starting to generate the Taskflow XML files')
 
     # Get the unique list of step orders
-    dfPlan = dfPlan.sort_values('plan_step_order')
     order_list = dfPlan['plan_step_order'].unique()
     dfMtts = dfPlan[['plan_step_type','step_name','infa_id','infa_path']].copy()
     dfMtts = dfMtts[dfMtts['plan_step_type'] == 'REGULAR'].drop_duplicates()
@@ -320,8 +618,8 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
         getResponse_Item_Entry_taskflow_tempFields_options_option3 = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_options, "option", attrib={
             "name": "referenceTo"
         })
-        #getResponse_Item_Entry_taskflow_tempFields_options_option3.text = f"$po:{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
-        getResponse_Item_Entry_taskflow_tempFields_options_option3.text = f"$po:{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }"
+        getResponse_Item_Entry_taskflow_tempFields_options_option3.text = f"$po:{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
+        #getResponse_Item_Entry_taskflow_tempFields_options_option3.text = f"$po:{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }"
 
 
     ######################################################################################
@@ -427,7 +725,10 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/start/link" element
     #TODO Add link handling when the first step is a parallel path
-    targetId = dfPlan.iloc[0]['dac2idmc_step_id']
+    first_seq = dfPlan.iloc[0]['plan_step_order']
+    dfSteps = dfPlan[dfPlan['plan_step_order'] == first_seq]
+    isParallel = True if len(dfSteps.index) > 1 else False
+    targetId = dfPlan.iloc[0]['dac2idmc_group_id'] if isParallel else dfPlan.iloc[0]['dac2idmc_step_id']
     getResponse_Item_Entry_taskflow_flow_end = etree.SubElement(getResponse_Item_Entry_taskflow_flow_start, "link", attrib={
         "id": "link" + shortuuid.uuid()[:8],
         "targetId": targetId if targetId is not None else 'end'
@@ -470,310 +771,82 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
     #TODO add handling for parallel paths
     for seq in order_list:
         dfSteps = dfPlan[dfPlan['plan_step_order'] == seq]
+        isParallel = True if len(dfSteps.index) > 1 else False
 
-        for idx, row in dfSteps.iterrows():
-            infa_id = row['infa_id']
-            step_name = row['step_name']
-            step_id = row['dac2idmc_step_id']
-            next_id = row['dac2idmc_next_id']
-    
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer = etree.SubElement(getResponse_Item_Entry_taskflow_flow, "eventContainer", attrib={
-                "id": step_id
+        # Add a parallel paths step if more than one step in the same group
+        if isParallel:
+            groupId = dfSteps.iloc[0]['dac2idmc_group_id']
+            next_id = dfSteps.iloc[-1]['dac2idmc_next_id']
+            next_group = dfSteps.iloc[0]['dac2idmc_next_group']
+            next_count = len(dfPlan[dfPlan['dac2idmc_group_id'] == next_group].index)
+            link_id = next_group if next_count > 1 and next_group is not None else next_id if next_id is not None else 'end'
+            
+            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/container" element
+            getResponse_Item_Entry_taskflow_flow_container = etree.SubElement(getResponse_Item_Entry_taskflow_flow, "container", attrib={
+                "id": groupId,
+                "type": "parallel"
             })
 
-            '''
-            <service id="mcoczikl">
-                <title>SDE_ORA_EmployeeDailySnapshotFact_2</title>
-                <serviceName>ICSExecuteDataTask</serviceName>
-                <serviceGUID/>
-                <serviceInput>
-                    ...
-                </serviceInput>
-                <serviceOutput>
-                    ...
-                </serviceOutput>
-            </service>
-            '''
+            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/container/title" element
+            getResponse_Item_Entry_taskflow_flow_container_title = etree.SubElement(getResponse_Item_Entry_taskflow_flow_container, "title")
+            getResponse_Item_Entry_taskflow_flow_container_title.text = f"Parallel Paths { groupId }"
 
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer, "service", attrib={
-                #"id": str(uuid.uuid4()).replace('-','')
-                "id": "svc" + shortuuid.uuid()[:8]
-            })
+            # Add the task containers
+            for idx, row in dfSteps.iterrows():
+                infa_id = row['infa_id']
+                step_name = row['step_name']
+                step_id = row['dac2idmc_step_id']
+                
 
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/title" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_title = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service, "title")
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_title.text = step_name
+                # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/container/flow" element
+                getResponse_Item_Entry_taskflow_flow_container_flow = etree.SubElement(getResponse_Item_Entry_taskflow_flow_container, "flow", attrib={
+                    "id": "flow" + step_id
+                })
 
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceName" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceName = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service, "serviceName")
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceName.text = "ICSExecuteDataTask"
+                # Add the task
+                add_task(getResponse_Item_Entry_taskflow_flow_container_flow, infa_id, step_id, step_name, groupId, False)
 
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceGUID" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceGUID = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service, "serviceGUID")
+                # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/container/flow/link" element
+                getResponse_Item_Entry_taskflow_flow_container_flow_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_container_flow, "link", attrib={
+                    "id": "link" + shortuuid.uuid()[:8],
+                    "targetId": groupId,
+                    "type": "containerLink"
+                })
 
-            '''
-            <serviceInput>
-                <parameter name="Wait for Task to Complete" source="constant" updatable="true">true</parameter>
-                <parameter name="Max Wait" source="constant" updatable="true">604800</parameter>
-                <parameter name="Task Name" source="constant" updatable="true">SDE_ORA_EmployeeDailySnapshotFact_2</parameter>
-                <parameter name="GUID" source="constant" updatable="true">a0Ks8uNXYKLg38LRNzw6gv</parameter>
-                <parameter name="Task Type" source="constant" updatable="true">MCT</parameter>
-                <parameter name="Has Inout Parameters" source="constant" updatable="true">false</parameter>
-                <parameter name="taskField" source="nested">
-                    <operation source="field"
-                                to="SDE-ORA-EmployeeDailySnapshotFact-2-a0Ks8uNXYKLg38LRNzw6gv">temp.SDE_ORA_EmployeeDailySnapshotFact_2</operation>
-                </parameter>
-            </serviceInput>
-            '''
+            # Add the container links
+            for idx, row in dfSteps.iterrows():
+                infa_id = row['infa_id']
+                step_name = row['step_name']
+                step_id = row['dac2idmc_step_id']
+                next_id = row['dac2idmc_next_id']
 
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service, "serviceInput")
+                # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/container/link" element
+                getResponse_Item_Entry_taskflow_flow_container_flow_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_container, "link", attrib={
+                    "id": "link" + shortuuid.uuid()[:8],
+                    "targetId": "flow" + step_id,
+                    "type": "containerLink"
+                })
 
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param1 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput, "parameter", attrib={
-                "name": "Wait for Task to Complete",
-                "source": "constant",
-                "updatable": "true"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param1.text = "true"
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param2 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput, "parameter", attrib={
-                "name": "Max Wait",
-                "source": "constant",
-                "updatable": "true"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param2.text = "604800"
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param3 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput, "parameter", attrib={
-                "name": "Task Name",
-                "source": "constant",
-                "updatable": "true"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param3.text = step_name
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param4 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput, "parameter", attrib={
-                "name": "GUID",
-                "source": "constant",
-                "updatable": "true"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param4.text = infa_id
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param5 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput, "parameter", attrib={
-                "name": "Task Type",
-                "source": "constant",
-                "updatable": "true"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param5.text = "MCT"
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param6 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput, "parameter", attrib={
-                "name": "Has Inout Parameters",
-                "source": "constant",
-                "updatable": "true"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param6.text = "false"
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param7 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput, "parameter", attrib={
-                "name": "taskField",
-                "source": "nested"
-            })
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param7_operation = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param7, "operation", attrib={
-                "source": "field",
-                #"to": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
-                "to": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param7_operation.text = f"temp.{ step_name }"
-
-            '''
-            <serviceOutput>
-                <operation source="field"
-                            to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Object_Name">Object Name</operation>
-                <operation source="field"
-                            to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Run_Id">Run Id</operation>
-                <operation source="field"
-                            to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Log_Id">Log Id</operation>
-                <operation source="field"
-                            to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Task_Id">Task Id</operation>
-                <operation source="field"
-                            to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Task_Status">Task Status</operation>
-                <operation source="field"
-                            to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Success_Source_Rows">Success Source Rows</operation>
-                <operation source="field"
-                            to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Failed_Source_Rows">Failed Source Rows</operation>
-                <operation source="field"
-                            to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Success_Target_Rows">Success Target Rows</operation>
-                <operation source="field"
-                            to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Failed_Target_Rows">Failed Target Rows</operation>
-                <operation source="field"
-                            to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Start_Time">Start Time</operation>
-                <operation source="field"
-                            to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/End_Time">End Time</operation>
-                <operation source="field"
-                            to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/Error_Message">Error Message</operation>
-                <operation source="field"
-                            to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/TotalTransErrors">Total Transformation Errors</operation>
-                <operation source="field"
-                            to="temp.SDE_ORA_EmployeeDailySnapshotFact_2/output/FirstErrorCode">First Error Code</operation>
-            </serviceOutput>
-            '''
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceOutput" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service, "serviceOutput")
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation1 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
-                "source": "field",
-                "to": f"temp.{ step_name }/output/Object_Name"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation1.text = "Object Name"
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation2 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
-                "source": "field",
-                "to": f"temp.{ step_name }/output/Run_Id"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation2.text = "Run Id"
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation3 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
-                "source": "field",
-                "to": f"temp.{ step_name }/output/Log_Id"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation3.text = "Log Id"
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation4 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
-                "source": "field",
-                "to": f"temp.{ step_name }/output/Task_Id"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation4.text = "Task Id"
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation5 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
-                "source": "field",
-                "to": f"temp.{ step_name }/output/Task_Status"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation5.text = "Task Status"
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation6 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
-                "source": "field",
-                "to": f"temp.{ step_name }/output/Success_Source_Rows"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation6.text = "Success Source Rows"
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation7 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
-                "source": "field",
-                "to": f"temp.{ step_name }/output/Failed_Source_Rows"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation7.text = "Failed Source Rows"
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation8 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
-                "source": "field",
-                "to": f"temp.{ step_name }/output/Success_Target_Rows"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation8.text = "Success Target Rows"
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation9 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
-                "source": "field",
-                "to": f"temp.{ step_name }/output/Failed_Target_Rows"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation9.text = "Failed Target Rows"
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation10 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
-                "source": "field",
-                "to": f"temp.{ step_name }/output/Start_Time"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation10.text = "Start Time"
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation11 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
-                "source": "field",
-                "to": f"temp.{ step_name }/output/End_Time"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation11.text = "End Time"
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation12 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
-                "source": "field",
-                "to": f"temp.{ step_name }/output/Error_Message"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation12.text = "Error Message"
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation13 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
-                "source": "field",
-                "to": f"temp.{ step_name }/output/TotalTransErrors"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation13.text = "Total Transformation Errors"
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation14 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceOutput, "operation", attrib={
-                "source": "field",
-                "to": f"temp.{ step_name }/output/FirstErrorCode"
-            })
-            getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_operation14.text = "First Error Code"
-
-            '''
-            <link id="mcoczikn" targetId="c"/>
-            <events>
-                <catch faultField="temp.SDE_ORA_EmployeeDailySnapshotFact_2/fault"
-                    id="mcoczil7"
-                    interrupting="true"
-                    name="error">
-                <suspend/>
-                </catch>
-                <catch faultField="temp.SDE_ORA_EmployeeDailySnapshotFact_2/fault"
-                    id="mcoczil8"
-                    interrupting="true"
-                    name="warning"/>
-            </events>
-            '''
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/link" element
-            targetId = row['dac2idmc_next_id']
-            getResponse_Item_Entry_taskflow_flow_eventContainer_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer, "link", attrib={
-                #"id": str(uuid.uuid4()).replace('-',''),
+            # Create the final connecting "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/container/link" element
+            getResponse_Item_Entry_taskflow_flow_container_flow_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_container, "link", attrib={
                 "id": "link" + shortuuid.uuid()[:8],
-                "targetId": targetId if targetId is not None else 'end'
+                "targetId": link_id
             })
 
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/events" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_events = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer, "events")
 
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/events/catch" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_events_catch1 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_events, "catch", attrib={
-                "faultField": f"temp.{ step_name }/fault",
-                #"id": str(uuid.uuid4()).replace('-',''),
-                "id": "catch" + shortuuid.uuid()[:8],
-                "interrupting": "true",
-                "name": "error"
-            })
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/events/catch/suspend" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_events_catch1_suspend = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_events_catch1, "suspend")
-
-            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/events/catch" element
-            getResponse_Item_Entry_taskflow_flow_eventContainer_events_catch2 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_events, "catch", attrib={
-                "faultField": f"temp.{ step_name }/fault",
-                #"id": str(uuid.uuid4()).replace('-',''),
-                "id": "catch" + shortuuid.uuid()[:8],
-                "interrupting": "true",
-                "name": "warning"
-            })
+        # Add the single tasks
+        else:
+            for idx, row in dfSteps.iterrows():
+                infa_id = row['infa_id']
+                step_name = row['step_name']
+                step_id = row['dac2idmc_step_id']
+                next_id = row['dac2idmc_next_id']
+                next_group = row['dac2idmc_next_group']
+                next_count = len(dfPlan[dfPlan['dac2idmc_group_id'] == next_group].index)
+                link_id = next_group if next_count > 1 and next_group is not None else next_id if next_id is not None else 'end'
+        
+                # Add the task
+                add_task(getResponse_Item_Entry_taskflow_flow, infa_id, step_id, step_name, link_id, True)
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/end" element
     getResponse_Item_Entry_taskflow_flow_end = etree.SubElement(getResponse_Item_Entry_taskflow_flow, "end", attrib={
@@ -840,11 +913,11 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
         # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies/processObject" element
         getResponse_Item_Entry_taskflow_dependencies_processObject = etree.SubElement(getResponse_Item_Entry_taskflow_dependencies, "processObject", attrib={
             "xmlns": "http://schemas.active-endpoints.com/appmodules/screenflow/2011/06/avosHostEnvironment.xsd",
-            #"displayName": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }",
-            "displayName": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }",
+            "displayName": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }",
+            #"displayName": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }",
             "isByCopy": "true",
-            #"name": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
-            "name": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }"
+            "name": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
+            #"name": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }"
         })
 
         # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies/processObject/description" element

@@ -1,0 +1,112 @@
+{
+  "name" : "tf_Parallel_Path-1751860135810",
+  "sourceOrgId" : "2lh8CM1r57OkWgGofQVMIk",
+  "sourceOrgName" : "Jon Bowring Suborg",
+  "exportedObjects" : [ {
+    "objectGuid" : "a0Ks8uNXYKLg38LRNzw6gv",
+    "objectName" : "SDE_ORA_EmployeeDailySnapshotFact_2",
+    "objectType" : "MTT",
+    "path" : "/Explore/Default",
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 0,
+        "minor" : 0
+      },
+      "repoInfo" : {
+        "repoHandle" : "010SU10Z00000000001I"
+      },
+      "objectRefs" : [ ],
+      "contextAttributes" : null,
+      "additionalInfo" : {
+        "description" : "",
+        "contentType" : "JSON",
+        "documentState" : "VALID"
+      }
+    }
+  }, {
+    "objectGuid" : "8gORkCCxfM8hk1VxABRRqd",
+    "objectName" : "SDE_ORA_EmployeeDailySnapshotFact_3",
+    "objectType" : "MTT",
+    "path" : "/Explore/Default",
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 0,
+        "minor" : 0
+      },
+      "repoInfo" : {
+        "repoHandle" : "010SU10Z00000000001J"
+      },
+      "objectRefs" : [ ],
+      "contextAttributes" : null,
+      "additionalInfo" : {
+        "description" : "",
+        "contentType" : "JSON",
+        "documentState" : "VALID"
+      }
+    }
+  }, {
+    "objectGuid" : "0BIkznKY9oVep0gwf1Au6Y",
+    "objectName" : "tf_Parallel_Path",
+    "objectType" : "TASKFLOW",
+    "path" : "/Explore/Default",
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 1,
+        "minor" : 0
+      },
+      "repoInfo" : {
+        "repoHandle" : "pMgqdsQR6kbeJHQ-gt-250202-2025-07-07T03:48:15.257Z::tf.xml"
+      },
+      "objectRefs" : [ "a0Ks8uNXYKLg38LRNzw6gv", "8gORkCCxfM8hk1VxABRRqd", "6vPlMGJ7sw6juVvUtKpxYq" ],
+      "contextAttributes" : null,
+      "additionalInfo" : {
+        "description" : "",
+        "contentType" : "application/json; charset=utf-8",
+        "documentState" : "VALID"
+      }
+    }
+  }, {
+    "objectGuid" : "92TQndHw9hvjJrQafpLX2R",
+    "objectName" : "Default",
+    "objectType" : "Project",
+    "path" : "/Explore",
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 0,
+        "minor" : 0
+      },
+      "repoInfo" : null,
+      "objectRefs" : [ ],
+      "contextAttributes" : [ {
+        "name" : "IS_DEF_LOC",
+        "value" : "true"
+      } ],
+      "additionalInfo" : {
+        "description" : "Auto-generated Default Project",
+        "contentType" : null,
+        "documentState" : "COMPLETE"
+      }
+    }
+  }, {
+    "objectGuid" : "6vPlMGJ7sw6juVvUtKpxYq",
+    "objectName" : "SDE_ORA_EmployeeDailySnapshotFact_4",
+    "objectType" : "MTT",
+    "path" : "/Explore/Default",
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 0,
+        "minor" : 0
+      },
+      "repoInfo" : {
+        "repoHandle" : "010SU10Z00000000001K"
+      },
+      "objectRefs" : [ ],
+      "contextAttributes" : null,
+      "additionalInfo" : {
+        "description" : "",
+        "contentType" : "JSON",
+        "documentState" : "VALID"
+      }
+    }
+  } ]
+}

@@ -1,5 +1,6 @@
 from lxml import etree
 import uuid
+import shortuuid
 import re
 import logging
 
@@ -160,9 +161,9 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
     getResponse_Item_ModifiedBy = etree.SubElement(getResponse_Item, namespace + "ModifiedBy", nsmap={'types1': namespace_url})
 
     # Create the "/aetgt:getResponse/types1:Item/types1:ModificationDate" element
-    namespace_url = 'http://schemas.active-endpoints.com/appmodules/repository/2010/10/avrepository.xsd'
-    namespace = "{%s}" % namespace_url
-    getResponse_Item_ModificationDate = etree.SubElement(getResponse_Item, namespace + "ModificationDate", nsmap={'types1': namespace_url})
+    #namespace_url = 'http://schemas.active-endpoints.com/appmodules/repository/2010/10/avrepository.xsd'
+    #namespace = "{%s}" % namespace_url
+    #getResponse_Item_ModificationDate = etree.SubElement(getResponse_Item, namespace + "ModificationDate", nsmap={'types1': namespace_url})
 
     # Create the "/aetgt:getResponse/types1:Item/types1:PublicationStatus" element
     namespace_url = 'http://schemas.active-endpoints.com/appmodules/repository/2010/10/avrepository.xsd'
@@ -205,6 +206,7 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
     getResponse_Item_Entry_taskflow = etree.SubElement(getResponse_Item_Entry, "taskflow", attrib={ 
         "xmlns": "http://schemas.active-endpoints.com/appmodules/screenflow/2010/10/avosScreenflow.xsd",
         "displayName": taskflowName,
+        "name": taskflowName,
         "overrideAPIName": "false"
         },
         nsmap=namespaces)
@@ -318,8 +320,8 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
         getResponse_Item_Entry_taskflow_tempFields_options_option3 = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_options, "option", attrib={
             "name": "referenceTo"
         })
-        #TODO update reference name and ID
-        getResponse_Item_Entry_taskflow_tempFields_options_option3.text = f"$po:{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
+        #getResponse_Item_Entry_taskflow_tempFields_options_option3.text = f"$po:{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
+        getResponse_Item_Entry_taskflow_tempFields_options_option3.text = f"$po:{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }"
 
 
     ######################################################################################
@@ -353,26 +355,26 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
     logging.info('Building "/aetgt:getResponse/types1:Item/types1:Entry/taskflow" elements...')
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/extData" element
-    getResponse_Item_Entry_taskflow_extData = etree.SubElement(getResponse_Item_Entry_taskflow, "extData")
+    #getResponse_Item_Entry_taskflow_extData = etree.SubElement(getResponse_Item_Entry_taskflow, "extData")
 
     ######################################################################################
     # ## /aetgt:getResponse/types1:Item/types1:Entry/taskflow/extData
     ######################################################################################
 
 
-    logging.info('Building "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/extData" elements...')
+    #logging.info('Building "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/extData" elements...')
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/extData/nvpair" element
-    getResponse_Item_Entry_taskflow_extData_nvpair1 = etree.SubElement(getResponse_Item_Entry_taskflow_extData, "nvpair", attrib={
-        "name": "treatEmptyStringAsNotNull"
-    })
-    getResponse_Item_Entry_taskflow_extData_nvpair1.text = "false"
+    #getResponse_Item_Entry_taskflow_extData_nvpair1 = etree.SubElement(getResponse_Item_Entry_taskflow_extData, "nvpair", attrib={
+    #    "name": "treatEmptyStringAsNotNull"
+    #})
+    #getResponse_Item_Entry_taskflow_extData_nvpair1.text = "false"
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/extData/nvpair" element
-    getResponse_Item_Entry_taskflow_extData_nvpair2 = etree.SubElement(getResponse_Item_Entry_taskflow_extData, "nvpair", attrib={
-        "name": "treatEmptyObjectListAsArray"
-    })
-    getResponse_Item_Entry_taskflow_extData_nvpair2.text = "false"
+    #getResponse_Item_Entry_taskflow_extData_nvpair2 = etree.SubElement(getResponse_Item_Entry_taskflow_extData, "nvpair", attrib={
+    #    "name": "treatEmptyObjectListAsArray"
+    #})
+    #getResponse_Item_Entry_taskflow_extData_nvpair2.text = "false"
 
     ######################################################################################
     # ## /aetgt:getResponse/types1:Item/types1:Entry/taskflow
@@ -427,8 +429,8 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
     #TODO Add link handling when the first step is a parallel path
     targetId = dfPlan.iloc[0]['dac2idmc_step_id']
     getResponse_Item_Entry_taskflow_flow_end = etree.SubElement(getResponse_Item_Entry_taskflow_flow_start, "link", attrib={
-        "id": "link1",
-        "targetId": targetId if targetId is not None else 'c'
+        "id": "link" + shortuuid.uuid()[:8],
+        "targetId": targetId if targetId is not None else 'end'
     })
 
     ######################################################################################
@@ -496,7 +498,8 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
 
             # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service" element
             getResponse_Item_Entry_taskflow_flow_eventContainer_service = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer, "service", attrib={
-                "id": str(uuid.uuid4()).replace('-','')
+                #"id": str(uuid.uuid4()).replace('-','')
+                "id": "svc" + shortuuid.uuid()[:8]
             })
 
             # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/title" element
@@ -585,7 +588,8 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
             # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
             getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param7_operation = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param7, "operation", attrib={
                 "source": "field",
-                "to": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
+                #"to": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
+                "to": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }"
             })
             getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param7_operation.text = f"temp.{ step_name }"
 
@@ -742,8 +746,9 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
             # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/link" element
             targetId = row['dac2idmc_next_id']
             getResponse_Item_Entry_taskflow_flow_eventContainer_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer, "link", attrib={
-                "id": str(uuid.uuid4()).replace('-',''),
-                "targetId": targetId if targetId is not None else 'c'
+                #"id": str(uuid.uuid4()).replace('-',''),
+                "id": "link" + shortuuid.uuid()[:8],
+                "targetId": targetId if targetId is not None else 'end'
             })
 
             # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/events" element
@@ -752,7 +757,8 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
             # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/events/catch" element
             getResponse_Item_Entry_taskflow_flow_eventContainer_events_catch1 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_events, "catch", attrib={
                 "faultField": f"temp.{ step_name }/fault",
-                "id": str(uuid.uuid4()).replace('-',''),
+                #"id": str(uuid.uuid4()).replace('-',''),
+                "id": "catch" + shortuuid.uuid()[:8],
                 "interrupting": "true",
                 "name": "error"
             })
@@ -763,14 +769,15 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
             # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/events/catch" element
             getResponse_Item_Entry_taskflow_flow_eventContainer_events_catch2 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_events, "catch", attrib={
                 "faultField": f"temp.{ step_name }/fault",
-                "id": str(uuid.uuid4()).replace('-',''),
+                #"id": str(uuid.uuid4()).replace('-',''),
+                "id": "catch" + shortuuid.uuid()[:8],
                 "interrupting": "true",
                 "name": "warning"
             })
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/end" element
     getResponse_Item_Entry_taskflow_flow_end = etree.SubElement(getResponse_Item_Entry_taskflow_flow, "end", attrib={
-        "id": "c"
+        "id": "end"
     })
 
     ######################################################################################
@@ -833,9 +840,11 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
         # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies/processObject" element
         getResponse_Item_Entry_taskflow_dependencies_processObject = etree.SubElement(getResponse_Item_Entry_taskflow_dependencies, "processObject", attrib={
             "xmlns": "http://schemas.active-endpoints.com/appmodules/screenflow/2011/06/avosHostEnvironment.xsd",
-            "displayName": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }",
+            #"displayName": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }",
+            "displayName": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }",
             "isByCopy": "true",
-            "name": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
+            #"name": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
+            "name": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }"
         })
 
         # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies/processObject/description" element

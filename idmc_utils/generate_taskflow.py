@@ -4,7 +4,7 @@ import shortuuid
 import re
 import logging
 
-def add_eventContainer(parent, infa_id, step_id, step_name, next_id):
+def add_task(parent, infa_id, step_id, step_name, next_id, create_link):
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer" element
     getResponse_Item_Entry_taskflow_flow_eventContainer = etree.SubElement(parent, "eventContainer", attrib={
         "id": step_id
@@ -272,12 +272,13 @@ def add_eventContainer(parent, infa_id, step_id, step_name, next_id):
     '''
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/link" element
-    targetId = next_id
-    getResponse_Item_Entry_taskflow_flow_eventContainer_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer, "link", attrib={
-        #"id": str(uuid.uuid4()).replace('-',''),
-        "id": "link" + shortuuid.uuid()[:8],
-        "targetId": targetId if targetId is not None else 'end'
-    })
+    if create_link:
+        targetId = next_id
+        getResponse_Item_Entry_taskflow_flow_eventContainer_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer, "link", attrib={
+            #"id": str(uuid.uuid4()).replace('-',''),
+            "id": "link" + shortuuid.uuid()[:8],
+            "targetId": targetId if targetId is not None else 'end'
+        })
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/events" element
     getResponse_Item_Entry_taskflow_flow_eventContainer_events = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer, "events")
@@ -725,7 +726,10 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/start/link" element
     #TODO Add link handling when the first step is a parallel path
-    targetId = dfPlan.iloc[0]['dac2idmc_step_id']
+    first_seq = dfPlan.iloc[0]['plan_step_order']
+    dfSteps = dfPlan[dfPlan['plan_step_order'] == first_seq]
+    isParallel = True if len(dfSteps.index) > 1 else False
+    targetId = dfPlan.iloc[0]['dac2idmc_group_id'] if isParallel else dfPlan.iloc[0]['dac2idmc_step_id']
     getResponse_Item_Entry_taskflow_flow_end = etree.SubElement(getResponse_Item_Entry_taskflow_flow_start, "link", attrib={
         "id": "link" + shortuuid.uuid()[:8],
         "targetId": targetId if targetId is not None else 'end'
@@ -768,15 +772,76 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
     #TODO add handling for parallel paths
     for seq in order_list:
         dfSteps = dfPlan[dfPlan['plan_step_order'] == seq]
+        isParallel = True if len(dfSteps.index) > 1 else False
 
-        for idx, row in dfSteps.iterrows():
-            infa_id = row['infa_id']
-            step_name = row['step_name']
-            step_id = row['dac2idmc_step_id']
-            next_id = row['dac2idmc_next_id']
-    
-            # Add the event container
-            add_eventContainer(getResponse_Item_Entry_taskflow_flow, infa_id, step_id, step_name, next_id)
+        # Add a parallel paths step if more than one step in the same group
+        if isParallel:
+            groupId = dfSteps.iloc[0]['dac2idmc_group_id']
+            next_id = dfSteps.iloc[-1]['dac2idmc_next_id']
+            
+            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/container" element
+            getResponse_Item_Entry_taskflow_flow_container = etree.SubElement(getResponse_Item_Entry_taskflow_flow, "container", attrib={
+                "id": groupId,
+                "type": "parallel"
+            })
+
+            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/container/title" element
+            getResponse_Item_Entry_taskflow_flow_container_title = etree.SubElement(getResponse_Item_Entry_taskflow_flow_container, "title")
+            getResponse_Item_Entry_taskflow_flow_container_title.text = f"Parallel Paths { groupId }"
+
+            # Add the task containers
+            for idx, row in dfSteps.iterrows():
+                infa_id = row['infa_id']
+                step_name = row['step_name']
+                step_id = row['dac2idmc_step_id']
+                
+
+                # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/container/flow" element
+                getResponse_Item_Entry_taskflow_flow_container_flow = etree.SubElement(getResponse_Item_Entry_taskflow_flow_container, "flow", attrib={
+                    "id": "flow" + step_id
+                })
+
+                # Add the task
+                add_task(getResponse_Item_Entry_taskflow_flow_container_flow, infa_id, step_id, step_name, groupId, False)
+
+                # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/container/flow/link" element
+                getResponse_Item_Entry_taskflow_flow_container_flow_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_container_flow, "link", attrib={
+                    "id": "link" + shortuuid.uuid()[:8],
+                    "targetId": groupId,
+                    "type": "containerLink"
+                })
+
+            # Add the container links
+            for idx, row in dfSteps.iterrows():
+                infa_id = row['infa_id']
+                step_name = row['step_name']
+                step_id = row['dac2idmc_step_id']
+                next_id = row['dac2idmc_next_id']
+
+                # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/container/link" element
+                getResponse_Item_Entry_taskflow_flow_container_flow_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_container, "link", attrib={
+                    "id": "link" + shortuuid.uuid()[:8],
+                    "targetId": "flow" + step_id,
+                    "type": "containerLink"
+                })
+
+            # Create the final connecting "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/container/link" element
+            getResponse_Item_Entry_taskflow_flow_container_flow_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_container, "link", attrib={
+                "id": "link" + shortuuid.uuid()[:8],
+                "targetId": next_id if next_id is not None else 'end'
+            })
+
+
+        # Add the single tasks
+        else:
+            for idx, row in dfSteps.iterrows():
+                infa_id = row['infa_id']
+                step_name = row['step_name']
+                step_id = row['dac2idmc_step_id']
+                next_id = row['dac2idmc_next_id']
+        
+                # Add the task
+                add_task(getResponse_Item_Entry_taskflow_flow, infa_id, step_id, step_name, next_id, True)
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/end" element
     getResponse_Item_Entry_taskflow_flow_end = etree.SubElement(getResponse_Item_Entry_taskflow_flow, "end", attrib={

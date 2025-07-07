@@ -316,7 +316,6 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
     logging.info('Starting to generate the Taskflow XML files')
 
     # Get the unique list of step orders
-    dfPlan = dfPlan.sort_values('plan_step_order')
     order_list = dfPlan['plan_step_order'].unique()
     dfMtts = dfPlan[['plan_step_type','step_name','infa_id','infa_path']].copy()
     dfMtts = dfMtts[dfMtts['plan_step_type'] == 'REGULAR'].drop_duplicates()
@@ -778,6 +777,9 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
         if isParallel:
             groupId = dfSteps.iloc[0]['dac2idmc_group_id']
             next_id = dfSteps.iloc[-1]['dac2idmc_next_id']
+            next_group = dfSteps.iloc[0]['dac2idmc_next_group']
+            next_count = len(dfPlan[dfPlan['dac2idmc_group_id'] == next_group].index)
+            link_id = next_group if next_count > 1 and next_group is not None else next_id if next_id is not None else 'end'
             
             # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/container" element
             getResponse_Item_Entry_taskflow_flow_container = etree.SubElement(getResponse_Item_Entry_taskflow_flow, "container", attrib={
@@ -828,7 +830,7 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
             # Create the final connecting "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/container/link" element
             getResponse_Item_Entry_taskflow_flow_container_flow_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_container, "link", attrib={
                 "id": "link" + shortuuid.uuid()[:8],
-                "targetId": next_id if next_id is not None else 'end'
+                "targetId": link_id
             })
 
 
@@ -839,9 +841,12 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
                 step_name = row['step_name']
                 step_id = row['dac2idmc_step_id']
                 next_id = row['dac2idmc_next_id']
+                next_group = row['dac2idmc_next_group']
+                next_count = len(dfPlan[dfPlan['dac2idmc_group_id'] == next_group].index)
+                link_id = next_group if next_count > 1 and next_group is not None else next_id if next_id is not None else 'end'
         
                 # Add the task
-                add_task(getResponse_Item_Entry_taskflow_flow, infa_id, step_id, step_name, next_id, True)
+                add_task(getResponse_Item_Entry_taskflow_flow, infa_id, step_id, step_name, link_id, True)
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/end" element
     getResponse_Item_Entry_taskflow_flow_end = etree.SubElement(getResponse_Item_Entry_taskflow_flow, "end", attrib={

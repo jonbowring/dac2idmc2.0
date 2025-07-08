@@ -1,0 +1,108 @@
+<aetgt:getResponse xmlns:aetgt="http://schemas.active-endpoints.com/appmodules/repository/2010/10/avrepository.xsd"
+   xmlns:types1="http://schemas.active-endpoints.com/appmodules/repository/2010/10/avrepository.xsd">
+   <types1:Item>
+      <types1:EntryId>hrWvbeGoQwg74Rp-gt-266317-2025-07-07T07:13:20.113Z::tf.xml</types1:EntryId>
+      <types1:Name>tf_Command_Example</types1:Name>
+      <types1:MimeType>application/xml+taskflow</types1:MimeType>
+      <types1:Description/>
+      <types1:AppliesTo/>
+      <types1:Tags/>
+      <types1:VersionLabel>1.0</types1:VersionLabel>
+      <types1:State>CURRENT</types1:State>
+      <types1:ProcessGroup/>
+      <types1:CreatedBy>jbowring_APJS_tspod_SO</types1:CreatedBy>
+      <types1:CreationDate>2025-07-07T07:13:20Z</types1:CreationDate>
+      <types1:ModifiedBy>jbowring_APJS_tspod_SO</types1:ModifiedBy>
+      <types1:ModificationDate>2025-07-07T07:15:47Z</types1:ModificationDate>
+      <types1:PublicationStatus>published</types1:PublicationStatus>
+      <types1:PublishedBy>jbowring_APJS_tspod_SO</types1:PublishedBy>
+      <types1:PublicationDate>2025-07-07T07:15:52Z</types1:PublicationDate>
+      <types1:PublishedContributionId>project:/tf.tf_Command_Example/tf_Command_Example.tf.xml</types1:PublishedContributionId>
+      <types1:Entry>
+         <taskflow xmlns="http://schemas.active-endpoints.com/appmodules/screenflow/2010/10/avosScreenflow.xsd"
+            xmlns:tfm="http://schemas.active-endpoints.com/appmodules/screenflow/2021/04/taskflowModel.xsd"
+            xmlns:list="urn:activevos:spi:list:functions" displayName="tf_Command_Example" name="tf_Command_Example" overrideAPIName="false">
+            <parameterSet xmlns="http://schemas.active-endpoints.com/appmodules/screenflow/2021/04/taskflowModel.xsd"/>
+            <appliesTo/>
+            <description/>
+            <tags/>
+            <generator>Informatica Process Designer 11</generator>
+            <tempFields>
+               <field description="" name="Execute SQL" type="reference">
+                  <options>
+                     <option name="referenceTo">$po:INFA-commandTask</option>
+                     <option name="failOnNotRun">false</option>
+                     <option name="failOnFault">false</option>
+                  </options>
+               </field>
+            </tempFields>
+            <notes/>
+            <deployment skipIfRunning="false" suspendOnFault="false" tracingLevel="verbose">
+               <rest/>
+            </deployment>
+            <extData>
+               <nvpair name="treatEmptyStringAsNotNull">false</nvpair>
+               <nvpair name="treatEmptyObjectListAsArray">false</nvpair>
+            </extData>
+            <flow id="a">
+               <start id="b">
+                  <link id="mcsqldbl" targetId="mcsqldch"/>
+               </start>
+               <eventContainer id="mcsqldch">
+                  <service id="mcsqldbk">
+                     <title>Execute SQL</title>
+                     <serviceName>ICSExecuteCommandTask</serviceName>
+                     <serviceGUID/>
+                     <serviceInput>
+                        <parameter name="Task Name" source="constant">Execute SQL</parameter>
+                        <parameter name="Wait for Task to Complete" source="constant">true</parameter>
+                        <parameter name="Runtime Environment" source="constant">010SU125000000000002:AUW487V7S3-AAD</parameter>
+                        <parameter name="Max Wait" source="constant">86400</parameter>
+                        <parameter name="Script Name" source="constant"/>
+                        <parameter name="Input Arguments" source="constant"/>
+                        <parameter name="Work Directory" source="constant"/>
+                        <parameter name="RuntimeEnvGUID" source="constant">cPbb2XLzpoweqfBP9W6kOJ</parameter>
+                        <parameter name="FailTaskIfAnyScriptFails" source="constant">false</parameter>
+                        <parameter name="taskField" source="nested">
+                           <operation source="field" to="INFA-commandTask">temp.Execute SQL</operation>
+                           <operation source="constant" to="INFA-commandTask/input[1]/script-1/name">Script1</operation>
+                           <operation source="constant" to="INFA-commandTask/input[1]/script-1/scriptName">C:\Informatica\scripts\HelloWorld.bat</operation>
+                           <operation source="constant" to="INFA-commandTask/input[1]/script-1/inputArguments">"Jon"</operation>
+                           <operation source="constant" to="INFA-commandTask/input[1]/script-1/workDir">C:\Informatica\scripts</operation>
+                        </parameter>
+                     </serviceInput>
+                     <serviceOutput>
+                        <operation source="field" to="temp.Execute SQL/output/Run_Id">Run Id</operation>
+                        <operation source="field" to="temp.Execute SQL/output/Start_Time">Start Time</operation>
+                        <operation source="field" to="temp.Execute SQL/output/End_Time">End Time</operation>
+                        <operation source="field" to="temp.Execute SQL/output/Exit_Code">Exit Code</operation>
+                        <operation source="field" to="temp.Execute SQL/output/Execution_Status">Execution Status</operation>
+                        <operation source="field" to="temp.Execute SQL/output/Std_Error">Std Error</operation>
+                     </serviceOutput>
+                  </service>
+                  <link id="mcsqldbm" targetId="c"/>
+                  <events>
+                     <catch faultField="temp.Execute SQL/fault" id="mcsqldcg" interrupting="true" name="error">
+                        <suspend/>
+                     </catch>
+                  </events>
+               </eventContainer>
+               <end id="c"/>
+            </flow>
+            <dependencies>
+               <processObject xmlns="http://schemas.active-endpoints.com/appmodules/screenflow/2011/06/avosHostEnvironment.xsd" displayName="INFA-commandTask" isByCopy="true" name="INFA-commandTask">
+                  <description>This process object represents a taskflow specific command task output field details.</description>
+                  <tags/>
+                  <detail>
+                     <field label="Output Parameters" name="output" nullable="true" required="false" type="reference"/>
+                     <field label="Fault" name="fault" nullable="true" required="false" type="reference"/>
+                  </detail>
+               </processObject>
+            </dependencies>
+         </taskflow>
+      </types1:Entry>
+      <types1:GUID>1vZJinnSn1mlPTzVChoY6V</types1:GUID>
+      <types1:DisplayName>tf_Command_Example</types1:DisplayName>
+   </types1:Item>
+   <types1:CurrentServerDateTime>2025-07-07T07:16:27.221Z</types1:CurrentServerDateTime>
+</aetgt:getResponse>

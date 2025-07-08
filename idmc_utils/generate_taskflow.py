@@ -108,18 +108,46 @@ def add_task(parent, infa_id, step_id, step_name, next_id, create_link):
     getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param6.text = "false"
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter" element
-    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param7 = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput, "parameter", attrib={
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput, "parameter", attrib={
         "name": "taskField",
         "source": "nested"
     })
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
-    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param7_operation = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param7, "operation", attrib={
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param, "operation", attrib={
         "source": "field",
         "to": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
         #"to": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }"
     })
-    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param7_operation.text = f"temp.{ step_name }"
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation.text = f"temp.{ step_name }"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param, "operation", attrib={
+        "source": "field",
+        "to": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }/taskProperties[1]/parameterFileDir"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation.text = "temp.parameter_directory"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param, "operation", attrib={
+        "source": "field",
+        "to": f"{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }/taskProperties[1]/parameterFileName"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation.text = "temp.parameter_file"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param, "operation", attrib={
+        "source": "field",
+        "to": f"temp.{ step_name }[1]/taskProperties[1]/parameterFileDir"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation.text = "temp.parameter_directory"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param, "operation", attrib={
+        "source": "field",
+        "to": f"temp.{ step_name }[1]/taskProperties[1]/parameterFileName"
+    })
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation.text = "temp.parameter_file"
 
     '''
     <serviceOutput>
@@ -835,7 +863,64 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan, config):
     </tempFields>
     '''
 
-    #TODO add loop to add field for each unique MTT
+    # Add the parameter file temp fields
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/tempFields/field" element
+    getResponse_Item_Entry_taskflow_tempFields_field = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields, "field", attrib={
+        "description": "",
+        "name": "parameter_file", 
+        "type": "string"
+    })
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/tempFields/options" element
+    getResponse_Item_Entry_taskflow_tempFields_options = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_field, "options")
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/tempFields/options/option" element
+    getResponse_Item_Entry_taskflow_tempFields_options_option1 = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_options, "option", attrib={
+        "name": "required"
+    })
+    getResponse_Item_Entry_taskflow_tempFields_options_option1.text = "false"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/tempFields/options/option" element
+    getResponse_Item_Entry_taskflow_tempFields_options_option1 = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_options, "option", attrib={
+        "name": "initialvalue"
+    })
+    getResponse_Item_Entry_taskflow_tempFields_options_option1.text = f"{ taskflowName }.param"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/tempFields/options/option" element
+    getResponse_Item_Entry_taskflow_tempFields_options_option1 = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_options, "option", attrib={
+        "name": "source"
+    })
+    getResponse_Item_Entry_taskflow_tempFields_options_option1.text = "constant"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/tempFields/field" element
+    getResponse_Item_Entry_taskflow_tempFields_field = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields, "field", attrib={
+        "description": "",
+        "name": "parameter_directory", 
+        "type": "string"
+    })
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/tempFields/options" element
+    getResponse_Item_Entry_taskflow_tempFields_options = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_field, "options")
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/tempFields/options/option" element
+    getResponse_Item_Entry_taskflow_tempFields_options_option1 = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_options, "option", attrib={
+        "name": "required"
+    })
+    getResponse_Item_Entry_taskflow_tempFields_options_option1.text = "false"
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/tempFields/options/option" element
+    getResponse_Item_Entry_taskflow_tempFields_options_option1 = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_options, "option", attrib={
+        "name": "initialvalue"
+    })
+    getResponse_Item_Entry_taskflow_tempFields_options_option1.text = config['local']['paramDir']
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/tempFields/options/option" element
+    getResponse_Item_Entry_taskflow_tempFields_options_option1 = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_options, "option", attrib={
+        "name": "source"
+    })
+    getResponse_Item_Entry_taskflow_tempFields_options_option1.text = "constant"
+
+    # Add temp fields for the steps
     for idx, row in dfPlan.iterrows():
 
         step_id = row['dac2idmc_step_id']

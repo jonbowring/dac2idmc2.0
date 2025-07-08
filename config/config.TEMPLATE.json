@@ -1,0 +1,12 @@
+{
+    "idmc": {
+        "host": "<IDMC host URL (e.g. dmp-us.informaticacloud.com)>",
+        "pod": "<IDMC pod (e.g. usw1)>",
+        "user": "<IDMC username>",
+        "password": "<IDMC password>",
+        "agentGroupName": "<Secure Agent Group Name>"
+    },
+    "local": {
+        "scriptsDir": "<Path to where scripts are kept on secure agent (e.g. C:\\Informatica\\scripts)>"
+    }
+}

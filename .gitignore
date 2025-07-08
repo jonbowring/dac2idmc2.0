@@ -1,6 +1,7 @@
 # Ignore the following directories
 /config/*
 !/config/.gitkeep
+!/config/config.TEMPLATE.json
 /in/*
 !/in/.gitkeep
 /out/*

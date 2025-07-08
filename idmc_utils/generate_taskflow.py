@@ -307,7 +307,7 @@ def add_task(parent, infa_id, step_id, step_name, next_id, create_link):
 
 
 
-def add_cmd(parent, step_id, step_name, next_id, runtime_id, runtime_guid, runtime_name, create_link):
+def add_cmd(parent, step_id, step_name, next_id, runtime_id, runtime_guid, runtime_name, config, create_link):
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer" element
     getResponse_Item_Entry_taskflow_flow_eventContainer = etree.SubElement(parent, "eventContainer", attrib={
         "id": step_id
@@ -419,7 +419,7 @@ def add_cmd(parent, step_id, step_name, next_id, runtime_id, runtime_guid, runti
         "to": "INFA-commandTask/input[1]/script-1/scriptName"
     })
     #TODO update script path to sqlplus script
-    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation.text = "C:\Informatica\scripts\HelloWorld.bat"
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation.text = f"{ config['local']['scriptsDir'] }\HelloWorld.bat"
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
     getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param, "operation", attrib={
@@ -434,8 +434,7 @@ def add_cmd(parent, step_id, step_name, next_id, runtime_id, runtime_guid, runti
         "source": "constant",
         "to": "INFA-commandTask/input[1]/script-1/workDir"
     })
-    #TODO update script work dir
-    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation.text = 'C:\Informatica\scripts'
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation.text = config['local']['scriptsDir']
 
     '''
     <serviceOutput>
@@ -554,7 +553,7 @@ def add_cmd(parent, step_id, step_name, next_id, runtime_id, runtime_guid, runti
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/events/catch/suspend" element
     getResponse_Item_Entry_taskflow_flow_eventContainer_events_catch1_suspend = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_events_catch1, "suspend")
 
-def generate_taskflow(taskflowID, taskflowName, dfPlan):
+def generate_taskflow(taskflowID, taskflowName, dfPlan, config):
 
     # Initialise the log file
     logging.basicConfig(
@@ -1064,7 +1063,7 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
                 # Add the task
                     add_task(getResponse_Item_Entry_taskflow_flow_container_flow, infa_id, step_id, step_name, groupId, False)
                 elif step_type == 'CREATE_QUERY_INDEXES':
-                    add_cmd(getResponse_Item_Entry_taskflow_flow_container_flow, step_id, step_name, next_id, runtime_id, runtime_guid, runtime_name, False)
+                    add_cmd(getResponse_Item_Entry_taskflow_flow_container_flow, step_id, step_name, next_id, runtime_id, runtime_guid, runtime_name, config, False)
 
                 # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/container/flow/link" element
                 getResponse_Item_Entry_taskflow_flow_container_flow_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_container_flow, "link", attrib={
@@ -1112,7 +1111,7 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan):
                 if step_type == 'REGULAR':
                     add_task(getResponse_Item_Entry_taskflow_flow, infa_id, step_id, step_name, link_id, True)
                 elif step_type == 'CREATE_QUERY_INDEXES':
-                    add_cmd(getResponse_Item_Entry_taskflow_flow, step_id, step_name, next_id, runtime_id, runtime_guid, runtime_name, True)
+                    add_cmd(getResponse_Item_Entry_taskflow_flow, step_id, step_name, next_id, runtime_id, runtime_guid, runtime_name, config, True)
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/end" element
     getResponse_Item_Entry_taskflow_flow_end = etree.SubElement(getResponse_Item_Entry_taskflow_flow, "end", attrib={

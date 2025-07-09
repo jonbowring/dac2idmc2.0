@@ -26,15 +26,15 @@ SELECT * FROM ORACLEDAC.W_ETL_TABLE;
 
 WITH normalised AS (
 	SELECT 
-	a.ROW_WID AS PLAN_WID
-	, a.NAME AS PLAN_NAME
-	, a.INACTIVE_FLG AS PLAN_INACTIVE_FLAG
-	, b.ROW_WID AS PLAN_STEP_WID
-	, b.PRIORITY AS PLAN_STEP_ORDER
-	, b.TYPE_CD AS PLAN_STEP_TYPE
-	, c.ROW_WID AS STEP_WID
-	, c.CMD_NAME AS STEP_CMD
-	, c.NAME AS STEP_NAME
+	a.ROW_WID AS "plan_wid"
+	, a.NAME AS "plan_name"
+	, a.INACTIVE_FLG AS "plan_inactive_flag"
+	, b.ROW_WID AS "plan_step_wid"
+	, b.PRIORITY AS "plan_step_order"
+	, b.TYPE_CD AS "plan_step_type"
+	, c.ROW_WID AS "step_wid"
+	, c.CMD_NAME AS "step_cmd"
+	, c.NAME AS "step_name"
 	FROM 
 	ORACLEDAC.W_ETL_DEFN a
 	INNER JOIN ORACLEDAC.W_ETL_DEFN_STEP b
@@ -50,16 +50,14 @@ WITH normalised AS (
 task_params AS (
 	
 	SELECT 
-	p.name,
-	p.value,
-	p.type_cd,
-	p.step_wid,
-	p.DATATYPE,
-	p.CONTEXT_TYPE,
-	p.INACTIVE_FLG,
-	p.comments
-	--,
-	--p.version
+	p.name AS "name",
+	p.value AS "value",
+	p.type_cd AS "type_cd",
+	p.step_wid AS "step_wid",
+	p.DATATYPE AS "datatype",
+	p.CONTEXT_TYPE AS "context_type",
+	p.INACTIVE_FLG AS "inactive_flag",
+	p.comments AS "comments"
 	FROM 
 	ORACLEDAC.W_ETL_PARAM p
 	--inner JOIN ORACLEDAC.W_ETL_STEP S ON (p.STEP_WID = s.ROW_WID)

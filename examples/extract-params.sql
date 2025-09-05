@@ -1,5 +1,7 @@
+-- Export the task parameters
 SELECT 
-p.name AS "name"
+p.row_wid as "param_wid"
+,p.name AS "name"
 ,p.value AS "value"
 ,p.type_cd AS "type_cd"
 ,p.step_wid AS "step_wid"
@@ -8,20 +10,46 @@ p.name AS "name"
 ,p.INACTIVE_FLG AS "inactive_flag"
 ,p.comments AS "comments"
 FROM 
-ORACLEDAC.W_ETL_PARAM p;
+ORACLEDAC.W_ETL_PARAM p
+
+-- Export the execution parameters
+SELECT 
+p.ROW_WID AS "param_wid"
+,p.name AS "name"
+,p.etl_defn_wid as "plan_wid"
+,'Execution parameters' AS "type_cd"
+,p.DATATYPE AS "datatype"
+,p.CONTEXT_TYPE AS "context_type"
+,p.INACTIVE_FLG AS "inactive_flag"
+,p.comments AS "comments"
+FROM 
+ORACLEDAC.w_etl_defn_oprm p;
+
+/*
+======================================================
+Exploration queries below this line
+======================================================
+*/
 
 -- Extracting parameter values
 -- Note: One parameter can be split across many rows. They all share the same obj_wid, order them using sequence, and use the pointer ptr_next to move to the next value
 
 SELECT
-*
+row_wid AS "row_wid",
+obj_wid AS "obj_wid",
+last_upd AS "last_upd",
+textfield AS "textfield",
+sequence AS "sequence",
+obj_type AS "obj_type",
+ptr_next AS "ptr_next",
+version_id AS "version_id"
 FROM
 ORACLEDAC.w_etl_text
-WHERE
-obj_wid = '9231AACC755C751FD26BEB513C23225'
+--WHERE
+--obj_wid = '9231AACC755C751FD26BEB513C23225'
 ORDER BY
 obj_wid,
-SEQUENCE;
+sequence;
 
 -- Source system parameters
 SELECT 

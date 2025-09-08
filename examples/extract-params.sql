@@ -1,4 +1,4 @@
--- Export the task parameters
+-- Export the task and source system parameters "params-task-src-sys.csv"
 SELECT 
 p.row_wid as "param_wid"
 ,p.name AS "name"
@@ -13,7 +13,7 @@ p.row_wid as "param_wid"
 FROM 
 ORACLEDAC.W_ETL_PARAM p;
 
--- Export the execution parameters
+-- Export the execution parameters "params-exec.csv"
 SELECT 
 p.ROW_WID AS "param_wid"
 ,p.name AS "name"
@@ -26,7 +26,7 @@ p.ROW_WID AS "param_wid"
 FROM 
 ORACLEDAC.w_etl_defn_oprm p;
 
--- Export the connectivity parameters
+-- Export the connectivity parameters "params-cnx.csv"
 SELECT 
 b.row_wid as "param_wid",
 b.etl_defn_wid as "plan_wid", --execution plan id

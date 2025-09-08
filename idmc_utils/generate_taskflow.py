@@ -884,7 +884,7 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan, config):
     getResponse_Item_Entry_taskflow_tempFields_options_option1 = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_options, "option", attrib={
         "name": "initialvalue"
     })
-    getResponse_Item_Entry_taskflow_tempFields_options_option1.text = f"{ taskflowName }.param"
+    getResponse_Item_Entry_taskflow_tempFields_options_option1.text = config['local']['paramFile']
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/tempFields/options/option" element
     getResponse_Item_Entry_taskflow_tempFields_options_option1 = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_options, "option", attrib={

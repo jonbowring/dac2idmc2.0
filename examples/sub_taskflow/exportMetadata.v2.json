@@ -1,0 +1,73 @@
+{
+  "name" : "tf_Sub_Taskflow_Example-1758073946822",
+  "sourceOrgId" : "2lh8CM1r57OkWgGofQVMIk",
+  "sourceOrgName" : "Jon Bowring Suborg",
+  "exportedObjects" : [ {
+    "objectGuid" : "4TpW5PN1hUvcfl4vmblwuE",
+    "objectName" : "tf_Sub_Taskflow_Example",
+    "objectType" : "TASKFLOW",
+    "path" : "/Explore/Default",
+    "providerName" : null,
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 1,
+        "minor" : 0
+      },
+      "repoInfo" : {
+        "repoHandle" : "BomsvE3C7snSDg8-gt-128783-2025-09-17T01:51:00.438Z::tf.xml"
+      },
+      "objectRefs" : [ "7oEzGh1BG8flvwrYGCgLE4" ],
+      "contextAttributes" : null,
+      "additionalInfo" : {
+        "description" : "",
+        "contentType" : "application/json; charset=utf-8",
+        "documentState" : "VALID"
+      }
+    }
+  }, {
+    "objectGuid" : "92TQndHw9hvjJrQafpLX2R",
+    "objectName" : "Default",
+    "objectType" : "Project",
+    "path" : "/Explore",
+    "providerName" : null,
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 0,
+        "minor" : 0
+      },
+      "repoInfo" : null,
+      "objectRefs" : [ ],
+      "contextAttributes" : [ {
+        "name" : "IS_DEF_LOC",
+        "value" : "true"
+      } ],
+      "additionalInfo" : {
+        "description" : "Auto-generated Default Project",
+        "contentType" : null,
+        "documentState" : "COMPLETE"
+      }
+    }
+  }, {
+    "objectGuid" : "7oEzGh1BG8flvwrYGCgLE4",
+    "objectName" : "TASK_GROUP_Extract_EmployeeDailySnapshotFact_Performance_Review",
+    "objectType" : "TASKFLOW",
+    "path" : "/Explore/Default",
+    "providerName" : null,
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 1,
+        "minor" : 0
+      },
+      "repoInfo" : {
+        "repoHandle" : "5LHk5hJdypKwKBq-gt-114115-2025-09-17T01:46:07.914Z::tf.xml"
+      },
+      "objectRefs" : [ ],
+      "contextAttributes" : null,
+      "additionalInfo" : {
+        "description" : "",
+        "contentType" : "application/json; charset=utf-8",
+        "documentState" : "VALID"
+      }
+    }
+  } ]
+}

@@ -1,0 +1,79 @@
+<aetgt:getResponse xmlns:aetgt="http://schemas.active-endpoints.com/appmodules/repository/2010/10/avrepository.xsd"
+                   xmlns:types1="http://schemas.active-endpoints.com/appmodules/repository/2010/10/avrepository.xsd">
+   <types1:Item>
+      <types1:EntryId>BomsvE3C7snSDg8-gt-128783-2025-09-17T01:51:00.438Z::tf.xml</types1:EntryId>
+      <types1:Name>tf_Sub_Taskflow_Example</types1:Name>
+      <types1:MimeType>application/xml+taskflow</types1:MimeType>
+      <types1:Description/>
+      <types1:AppliesTo/>
+      <types1:Tags/>
+      <types1:VersionLabel>1.0</types1:VersionLabel>
+      <types1:State>CURRENT</types1:State>
+      <types1:ProcessGroup/>
+      <types1:CreatedBy>jbowring_APJS_tspod_SO</types1:CreatedBy>
+      <types1:CreationDate>2025-09-17T01:51:00Z</types1:CreationDate>
+      <types1:ModifiedBy/>
+      <types1:PublicationStatus>unpublished</types1:PublicationStatus>
+      <types1:Entry>
+         <taskflow xmlns="http://schemas.active-endpoints.com/appmodules/screenflow/2010/10/avosScreenflow.xsd"
+                   xmlns:tfm="http://schemas.active-endpoints.com/appmodules/screenflow/2021/04/taskflowModel.xsd"
+                   xmlns:list="urn:activevos:spi:list:functions"
+                   displayName="tf_Sub_Taskflow_Example"
+                   name="tf_Sub_Taskflow_Example"
+                   overrideAPIName="false">
+            <parameterSet xmlns="http://schemas.active-endpoints.com/appmodules/screenflow/2021/04/taskflowModel.xsd"/>
+            <appliesTo/>
+            <description/>
+            <tags/>
+            <generator>Informatica Process Designer 11</generator>
+            <tempFields>
+               <field description=""
+                      name="TASK_GROUP_Extract_EmployeeDailySnapshotFact_Performance_Review"
+                      type="reference">
+                  <options>
+                     <option name="referenceTo">$po:InternalInfaSubTaskflowField</option>
+                     <option name="failOnNotRun">false</option>
+                     <option name="failOnFault">true</option>
+                  </options>
+               </field>
+            </tempFields>
+            <notes/>
+            <deployment skipIfRunning="false" suspendOnFault="false" tracingLevel="verbose">
+               <rest/>
+            </deployment>
+            <extData>
+               <nvpair name="treatEmptyStringAsNotNull">false</nvpair>
+               <nvpair name="treatEmptyObjectListAsArray">false</nvpair>
+            </extData>
+            <flow id="a">
+               <start id="b">
+                  <link id="mfnbqzwa" targetId="mfnbqzw9"/>
+               </start>
+               <subflow id="mfnbqzw9">
+                  <title>TASK_GROUP_Extract_EmployeeDailySnapshotFact_Performance_Review</title>
+                  <subflowGUID>7oEzGh1BG8flvwrYGCgLE4</subflowGUID>
+                  <subflowPath>TASK_GROUP_Extract_EmployeeDailySnapshotFact_Performance_Review</subflowPath>
+                  <runForEach>false</runForEach>
+                  <input/>
+                  <outputDef/>
+                  <link id="mfnbqzwb" targetId="c"/>
+               </subflow>
+               <end id="c"/>
+            </flow>
+            <dependencies>
+               <processObject xmlns="http://schemas.active-endpoints.com/appmodules/screenflow/2011/06/avosHostEnvironment.xsd"
+                              displayName="InternalInfaSubTaskflowField"
+                              isByCopy="true"
+                              name="InternalInfaSubTaskflowField">
+                  <description>This process object represents a subtaskflow type reference field.</description>
+                  <tags/>
+                  <detail/>
+               </processObject>
+            </dependencies>
+         </taskflow>
+      </types1:Entry>
+      <types1:GUID>4TpW5PN1hUvcfl4vmblwuE</types1:GUID>
+      <types1:DisplayName>tf_Sub_Taskflow_Example</types1:DisplayName>
+   </types1:Item>
+   <types1:CurrentServerDateTime>2025-09-17T01:52:33.399Z</types1:CurrentServerDateTime>
+</aetgt:getResponse>

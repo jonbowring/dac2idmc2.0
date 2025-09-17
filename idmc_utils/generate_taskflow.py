@@ -447,7 +447,7 @@ def add_cmd(parent, step_id, step_name, next_id, runtime_id, runtime_guid, runti
         "to": "INFA-commandTask/input[1]/script-1/scriptName"
     })
     #TODO update script path to sqlplus script
-    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation.text = f"{ config['local']['scriptsDir'] }\HelloWorld.bat"
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation.text = f"{ config['local']['scriptsDir'] }\\HelloWorld.bat"
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
     getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param, "operation", attrib={

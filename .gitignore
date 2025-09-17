@@ -12,3 +12,5 @@
 !/logs/.gitkeep
 /idmc_utils/__pycache__/
 /idmc_utils/__pycache__/*
+venv/
+.venv/

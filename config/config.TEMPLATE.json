@@ -4,10 +4,13 @@
         "pod": "<IDMC pod (e.g. usw1)>",
         "user": "<IDMC username>",
         "password": "<IDMC password>",
-        "agentGroupName": "<Secure Agent Group Name>"
+        "agentGroupName": "<Secure Agent Group Name>",
+        "folderPath": "<Path to IDMC assets and target for new assets>",
+        "maxWait": "<Maximum time in seconds to wait for imports to be processed>"
     },
     "local": {
         "scriptsDir": "<Path to where scripts are kept on secure agent (e.g. C:\\Informatica\\scripts)>",
-        "paramDir": "<Path to where parameter files are kept on secure agent (e.g. C:\\Informatica\\params)>"
+        "paramDir": "<Path to where parameter files are kept on secure agent (e.g. C:\\Informatica\\params)>",
+        "paramFile": "<File name for newly generated parameter file>"
     }
 }

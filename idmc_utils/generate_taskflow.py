@@ -447,7 +447,7 @@ def add_cmd(parent, step_id, step_name, next_id, runtime_id, runtime_guid, runti
         "to": "INFA-commandTask/input[1]/script-1/scriptName"
     })
     #TODO update script path to sqlplus script
-    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation.text = f"{ config['local']['scriptsDir'] }\HelloWorld.bat"
+    getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation.text = f"{ config['local']['scriptsDir'] }\\HelloWorld.bat"
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/service/serviceInput/parameter/operation" element
     getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param_operation = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_service_serviceInput_param, "operation", attrib={
@@ -580,6 +580,43 @@ def add_cmd(parent, step_id, step_name, next_id, runtime_id, runtime_guid, runti
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/events/catch/suspend" element
     getResponse_Item_Entry_taskflow_flow_eventContainer_events_catch1_suspend = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer_events_catch1, "suspend")
+
+def add_subtaskflow(parent, infa_id, step_id, step_name, next_id, create_link):
+    
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/subflow" element
+    getResponse_Item_Entry_taskflow_flow_subflow = etree.SubElement(parent, "subflow", attrib={
+        "id": step_id
+    })
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/subflow/title" element
+    getResponse_Item_Entry_taskflow_flow_subflow_title = etree.SubElement(getResponse_Item_Entry_taskflow_flow_subflow, 'title')
+    getResponse_Item_Entry_taskflow_flow_subflow_title.text = step_name
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/subflow/subflowGUID" element
+    getResponse_Item_Entry_taskflow_flow_subflow_subflowGUID = etree.SubElement(getResponse_Item_Entry_taskflow_flow_subflow, 'subflowGUID')
+    getResponse_Item_Entry_taskflow_flow_subflow_subflowGUID.text = infa_id
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/subflow/subflowPath" element
+    getResponse_Item_Entry_taskflow_flow_subflow_subflowPath = etree.SubElement(getResponse_Item_Entry_taskflow_flow_subflow, 'subflowPath')
+    getResponse_Item_Entry_taskflow_flow_subflow_subflowPath.text = step_name
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/subflow/runForEach" element
+    getResponse_Item_Entry_taskflow_flow_subflow_runForEach = etree.SubElement(getResponse_Item_Entry_taskflow_flow_subflow, 'runForEach')
+    getResponse_Item_Entry_taskflow_flow_subflow_runForEach.text = 'false'
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/subflow/input" element
+    getResponse_Item_Entry_taskflow_flow_subflow_input = etree.SubElement(getResponse_Item_Entry_taskflow_flow_subflow, 'input')
+
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/subflow/outputDef" element
+    getResponse_Item_Entry_taskflow_flow_subflow_outputDef = etree.SubElement(getResponse_Item_Entry_taskflow_flow_subflow, 'outputDef')
+    
+    # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/subflow/link" element
+    if create_link:
+        targetId = next_id
+        getResponse_Item_Entry_taskflow_flow_subflow_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_subflow, "link", attrib={
+            "id": "link" + shortuuid.uuid()[:8],
+            "targetId": targetId if targetId is not None else 'end'
+        })
 
 def generate_taskflow(taskflowID, taskflowName, dfPlan, config):
 
@@ -948,7 +985,7 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan, config):
         getResponse_Item_Entry_taskflow_tempFields_options_option2 = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_options, "option", attrib={
             "name": "failOnFault"
         })
-        getResponse_Item_Entry_taskflow_tempFields_options_option2.text = "false"
+        getResponse_Item_Entry_taskflow_tempFields_options_option2.text = "true" if step_type == 'SUBTASKFLOW' else "false"
 
         # Create the "/aetgt:getResponse/types1:Item/types1:Entry/tempFields/options/option" element
         getResponse_Item_Entry_taskflow_tempFields_options_option3 = etree.SubElement(getResponse_Item_Entry_taskflow_tempFields_options, "option", attrib={
@@ -956,6 +993,8 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan, config):
         })
         if step_type == 'REGULAR':
             getResponse_Item_Entry_taskflow_tempFields_options_option3.text = f"$po:{ re.sub(r'[^A-Za-z0-9]', '-', step_name) }-{ infa_id }"
+        elif step_type == 'SUBTASKFLOW':
+            getResponse_Item_Entry_taskflow_tempFields_options_option3.text = "$po:InternalInfaSubTaskflowField"
         elif step_type == 'CREATE_QUERY_INDEXES':
             getResponse_Item_Entry_taskflow_tempFields_options_option3.text = "$po:INFA-commandTask"
 
@@ -1144,11 +1183,13 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan, config):
                     "id": "flow" + step_id
                 })
 
+                # Add the step
                 if step_type == 'REGULAR':
-                # Add the task
                     add_task(getResponse_Item_Entry_taskflow_flow_container_flow, infa_id, step_id, step_name, groupId, False)
+                if step_type == 'SUBTASKFLOW':
+                    add_subtaskflow(getResponse_Item_Entry_taskflow_flow_container_flow, infa_id, step_id, step_name, groupId, False)
                 elif step_type == 'CREATE_QUERY_INDEXES':
-                    add_cmd(getResponse_Item_Entry_taskflow_flow_container_flow, step_id, step_name, next_id, runtime_id, runtime_guid, runtime_name, config, False)
+                    add_cmd(getResponse_Item_Entry_taskflow_flow_container_flow, step_id, step_name, groupId, runtime_id, runtime_guid, runtime_name, config, False)
 
                 # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/container/flow/link" element
                 getResponse_Item_Entry_taskflow_flow_container_flow_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_container_flow, "link", attrib={
@@ -1192,11 +1233,13 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan, config):
                 runtime_id = row['agent_id']
                 runtime_guid = row['agent_guid']
                 runtime_name = row['agent_name']
-        
+
                 if step_type == 'REGULAR':
                     add_task(getResponse_Item_Entry_taskflow_flow, infa_id, step_id, step_name, link_id, True)
+                elif step_type == 'SUBTASKFLOW':
+                    add_subtaskflow(getResponse_Item_Entry_taskflow_flow, infa_id, step_id, step_name, link_id, True)
                 elif step_type == 'CREATE_QUERY_INDEXES':
-                    add_cmd(getResponse_Item_Entry_taskflow_flow, step_id, step_name, next_id, runtime_id, runtime_guid, runtime_name, config, True)
+                    add_cmd(getResponse_Item_Entry_taskflow_flow, step_id, step_name, link_id, runtime_id, runtime_guid, runtime_name, config, True)
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/end" element
     getResponse_Item_Entry_taskflow_flow_end = etree.SubElement(getResponse_Item_Entry_taskflow_flow, "end", attrib={
@@ -1315,6 +1358,26 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan, config):
                 "required": "false",
                 "type": "int"
             })
+        
+        elif step_type == 'SUBTASKFLOW':
+        
+            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies/processObject" element
+            getResponse_Item_Entry_taskflow_dependencies_processObject = etree.SubElement(getResponse_Item_Entry_taskflow_dependencies, "processObject", attrib={
+                "xmlns": "http://schemas.active-endpoints.com/appmodules/screenflow/2011/06/avosHostEnvironment.xsd",
+                "displayName": f"InternalInfaSubTaskflowField",
+                "isByCopy": "true",
+                "name": f"InternalInfaSubTaskflowField"
+            })
+
+            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies/processObject/description" element
+            getResponse_Item_Entry_taskflow_dependencies_processObject_description = etree.SubElement(getResponse_Item_Entry_taskflow_dependencies_processObject, "description")
+            getResponse_Item_Entry_taskflow_dependencies_processObject_description.text = f"This process object represents a subtaskflow type reference field."
+
+            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies/processObject/tags" element
+            getResponse_Item_Entry_taskflow_dependencies_processObject_tags = etree.SubElement(getResponse_Item_Entry_taskflow_dependencies_processObject, "tags")
+
+            # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/dependencies/processObject/detail" element
+            getResponse_Item_Entry_taskflow_dependencies_processObject_detail = etree.SubElement(getResponse_Item_Entry_taskflow_dependencies_processObject, "detail")
         
         elif step_type == 'CREATE_QUERY_INDEXES':
             

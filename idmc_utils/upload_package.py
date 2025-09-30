@@ -18,6 +18,7 @@ def upload_package(sessionID, taskflowName, config):
     headers = { 'INFA-SESSION-ID': sessionID }
     files = {'package': (f'{ taskflowName }.zip', open(f'out/{ taskflowName }.zip', 'rb'), 'application/zip')}
     r = requests.post(url=url, headers=headers, files=files)
+    print(r.text)
     if r.status_code == 200:
         jobId = r.json()['jobId']
     else:
@@ -41,17 +42,41 @@ def upload_package(sessionID, taskflowName, config):
         }
     }
     r = requests.post(url=url, headers=headers, json=data)
-    status = r.json()['status']['state']
+    print(r.text)
+    if r.status_code == 200:
+        status = r.json()['status']['state']
+    else:
+        logging.error('Upload of package failed. See below details:')
+        logging.error('Method: ' + r.request.method)
+        logging.error('Headers: ' + str(r.request.headers))
+        logging.error('URL: ' + r.request.url)
+        logging.error('Body: ' + str(r.request.body))
+        logging.error('Hooks: ' + str(r.request.hooks))
+        logging.error('Status: ' + str(r.status_code))
+        logging.error('Response: ' + r.text)
+        raise Exception('Upload of package failed. See log for more details.')
 
     # Wait for the import job to finish
     maxWait = config['idmc']['maxWait']
     curWait = 0
     interval = 3
     while curWait < maxWait:
-        url = 'https://' + config['idmc']['pod'] + '.' + config['idmc']['host'] + '/saas/public/core/v3/import/9P1vKCf5JQdhFmYvu2LvYZ'
+        url = 'https://' + config['idmc']['pod'] + '.' + config['idmc']['host'] + '/saas/public/core/v3/import/' + quote( jobId )
         headers = { 'Accept': 'application/json', 'INFA-SESSION-ID': sessionID }
         r = requests.get(url=url, headers=headers)
-        status = r.json()['status']['state']
+        print(r.text)
+        if r.status_code == 200:
+            status = r.json()['status']['state']
+        else:
+            logging.error('Upload of package failed. See below details:')
+            logging.error('Method: ' + r.request.method)
+            logging.error('Headers: ' + str(r.request.headers))
+            logging.error('URL: ' + r.request.url)
+            logging.error('Body: ' + str(r.request.body))
+            logging.error('Hooks: ' + str(r.request.hooks))
+            logging.error('Status: ' + str(r.status_code))
+            logging.error('Response: ' + r.text)
+            raise Exception('Upload of package failed. See log for more details.')
 
         if status == 'IN_PROGRESS':
             logging.info(f'Waiting for import of "{ taskflowName }.zip" to be processed.')

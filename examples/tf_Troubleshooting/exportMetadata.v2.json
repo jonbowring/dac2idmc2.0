@@ -1,0 +1,293 @@
+{
+  "name" : "tf_Troubleshooting-1794363664842",
+  "sourceOrgId" : "2lh8CM1r57OkWgGofQVMIk",
+  "sourceOrgName" : "Jon Bowring Suborg",
+  "exportedObjects" : [ {
+    "objectGuid" : "h28YobWgcc3jZpdCtJlx8l",
+    "objectName" : "SIL_EmployeeDailySnapshotFact",
+    "objectType" : "TASKFLOW",
+    "path" : "/Explore/Default",
+    "providerName" : null,
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 1,
+        "minor" : 0
+      },
+      "repoInfo" : {
+        "repoHandle" : "aa-gt-150783-2026-11-11T00:18:10.02Z::tf.xml"
+      },
+      "objectRefs" : [ ],
+      "contextAttributes" : null,
+      "additionalInfo" : {
+        "description" : "",
+        "contentType" : null,
+        "documentState" : "VALID"
+      }
+    }
+  }, {
+    "objectGuid" : "ePtCNUwjemEiZpbcjlsxss",
+    "objectName" : "PLP_EmployeeMonthlySnapshot",
+    "objectType" : "TASKFLOW",
+    "path" : "/Explore/Default",
+    "providerName" : null,
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 1,
+        "minor" : 0
+      },
+      "repoInfo" : {
+        "repoHandle" : "aa-gt-151643-2026-11-11T00:18:57.001Z::tf.xml"
+      },
+      "objectRefs" : [ ],
+      "contextAttributes" : null,
+      "additionalInfo" : {
+        "description" : "",
+        "contentType" : null,
+        "documentState" : "VALID"
+      }
+    }
+  }, {
+    "objectGuid" : "4ZSfCG33BHIhCkCvHnnvIu",
+    "objectName" : "SDE_ORA_EmployeeDailySnapshotFact_PerformanceReview",
+    "objectType" : "TASKFLOW",
+    "path" : "/Explore/Default",
+    "providerName" : null,
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 1,
+        "minor" : 0
+      },
+      "repoInfo" : {
+        "repoHandle" : "2sBsoZduD2L5SeE-gt-150765-2026-11-11T00:16:22.856Z::tf.xml"
+      },
+      "objectRefs" : [ ],
+      "contextAttributes" : null,
+      "additionalInfo" : {
+        "description" : "",
+        "contentType" : null,
+        "documentState" : "VALID"
+      }
+    }
+  }, {
+    "objectGuid" : "4paAgRlg5j4gIEKspXPBEW",
+    "objectName" : "SDE_ORA_EmployeeDailySnapshotFact_1",
+    "objectType" : "TASKFLOW",
+    "path" : "/Explore/Default",
+    "providerName" : null,
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 1,
+        "minor" : 0
+      },
+      "repoInfo" : {
+        "repoHandle" : "ck1SwEYrwn2H0Fd-gt-151589-2026-11-11T00:15:34.041Z::tf.xml"
+      },
+      "objectRefs" : [ ],
+      "contextAttributes" : null,
+      "additionalInfo" : {
+        "description" : "",
+        "contentType" : null,
+        "documentState" : "VALID"
+      }
+    }
+  }, {
+    "objectGuid" : "0sG5mHOiS8Qe76B0UuO4u3",
+    "objectName" : "PLP_EmployeeDailySnapshot_Trim",
+    "objectType" : "TASKFLOW",
+    "path" : "/Explore/Default",
+    "providerName" : null,
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 1,
+        "minor" : 0
+      },
+      "repoInfo" : {
+        "repoHandle" : "vyXYDdxKlFmVSci-gt-150801-2026-11-11T00:18:34.352Z::tf.xml"
+      },
+      "objectRefs" : [ ],
+      "contextAttributes" : null,
+      "additionalInfo" : {
+        "description" : "",
+        "contentType" : null,
+        "documentState" : "VALID"
+      }
+    }
+  }, {
+    "objectGuid" : "66ekwf9r5J3kmvnOYBu8cL",
+    "objectName" : "tf_Troubleshooting",
+    "objectType" : "TASKFLOW",
+    "path" : "/Explore/Default",
+    "providerName" : null,
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 1,
+        "minor" : 0
+      },
+      "repoInfo" : {
+        "repoHandle" : "WIsoZduD2L5SeE1-gt-152915-2026-11-11T02:20:51.778Z::tf.xml"
+      },
+      "objectRefs" : [ "1UjUHuAA5Q0kpMVwRm3WYF", "h28YobWgcc3jZpdCtJlx8l", "6r26q9PzOrujPfecMFGpG7", "ePtCNUwjemEiZpbcjlsxss", "2L1hN51i4Fjcu7b5kt2YkQ", "4ZSfCG33BHIhCkCvHnnvIu", "4paAgRlg5j4gIEKspXPBEW", "0sG5mHOiS8Qe76B0UuO4u3", "5WanDX0ORyHio3XtJuUyEk", "2XEHprjHmYTihpdRkj5gkf", "0zNtXxUpColk7qdliS84yM" ],
+      "contextAttributes" : null,
+      "additionalInfo" : {
+        "description" : "",
+        "contentType" : "application/json; charset=utf-8",
+        "documentState" : "VALID"
+      }
+    }
+  }, {
+    "objectGuid" : "5WanDX0ORyHio3XtJuUyEk",
+    "objectName" : "SDE_ORA_EmployeeDailySnapshotFact_3",
+    "objectType" : "TASKFLOW",
+    "path" : "/Explore/Default",
+    "providerName" : null,
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 1,
+        "minor" : 0
+      },
+      "repoInfo" : {
+        "repoHandle" : "huR55aaabdqpw0V-gt-148751-2026-11-10T22:28:35.115Z::tf.xml"
+      },
+      "objectRefs" : [ ],
+      "contextAttributes" : null,
+      "additionalInfo" : {
+        "description" : "",
+        "contentType" : null,
+        "documentState" : "VALID"
+      }
+    }
+  }, {
+    "objectGuid" : "2XEHprjHmYTihpdRkj5gkf",
+    "objectName" : "SDE_ORA_EmployeeDailySnapshotFact_4",
+    "objectType" : "TASKFLOW",
+    "path" : "/Explore/Default",
+    "providerName" : null,
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 1,
+        "minor" : 0
+      },
+      "repoInfo" : {
+        "repoHandle" : "A0nYNmumf6S3wOL-gt-150737-2026-11-11T00:15:06.424Z::tf.xml"
+      },
+      "objectRefs" : [ ],
+      "contextAttributes" : null,
+      "additionalInfo" : {
+        "description" : "",
+        "contentType" : null,
+        "documentState" : "VALID"
+      }
+    }
+  }, {
+    "objectGuid" : "0zNtXxUpColk7qdliS84yM",
+    "objectName" : "SDE_ORA_EmployeeDailySnapshotFact",
+    "objectType" : "TASKFLOW",
+    "path" : "/Explore/Default",
+    "providerName" : null,
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 1,
+        "minor" : 0
+      },
+      "repoInfo" : {
+        "repoHandle" : "QVdoYsjqluQgabc-gt-151617-2026-11-11T00:17:11.691Z::tf.xml"
+      },
+      "objectRefs" : [ ],
+      "contextAttributes" : null,
+      "additionalInfo" : {
+        "description" : "",
+        "contentType" : null,
+        "documentState" : "VALID"
+      }
+    }
+  }, {
+    "objectGuid" : "1UjUHuAA5Q0kpMVwRm3WYF",
+    "objectName" : "SDE_ORA_EmployeeDailySnapshotFact_1_Update",
+    "objectType" : "TASKFLOW",
+    "path" : "/Explore/Default",
+    "providerName" : null,
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 1,
+        "minor" : 0
+      },
+      "repoInfo" : {
+        "repoHandle" : "ZeM7ppppppppppp-gt-151599-2026-11-11T00:16:48.825Z::tf.xml"
+      },
+      "objectRefs" : [ ],
+      "contextAttributes" : null,
+      "additionalInfo" : {
+        "description" : "",
+        "contentType" : null,
+        "documentState" : "VALID"
+      }
+    }
+  }, {
+    "objectGuid" : "6r26q9PzOrujPfecMFGpG7",
+    "objectName" : "TASK_GROUP_Extract_EmployeeDailySnapshotFact_Performance_Review",
+    "objectType" : "TASKFLOW",
+    "path" : "/Explore/Default",
+    "providerName" : null,
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 1,
+        "minor" : 0
+      },
+      "repoInfo" : {
+        "repoHandle" : "2nV60S24FsWTzIf-gt-149066-2025-09-30T03:56:37.861Z::tf.xml"
+      },
+      "objectRefs" : [ ],
+      "contextAttributes" : null,
+      "additionalInfo" : {
+        "description" : "",
+        "contentType" : "application/json; charset=utf-8",
+        "documentState" : "VALID"
+      }
+    }
+  }, {
+    "objectGuid" : "2L1hN51i4Fjcu7b5kt2YkQ",
+    "objectName" : "SDE_ORA_EmployeeDailySnapshotFact_2",
+    "objectType" : "TASKFLOW",
+    "path" : "/Explore/Default",
+    "providerName" : null,
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 1,
+        "minor" : 0
+      },
+      "repoInfo" : {
+        "repoHandle" : "UP9WYVMPINciZBp-gt-148733-2026-11-10T22:28:09.375Z::tf.xml"
+      },
+      "objectRefs" : [ ],
+      "contextAttributes" : null,
+      "additionalInfo" : {
+        "description" : "",
+        "contentType" : null,
+        "documentState" : "VALID"
+      }
+    }
+  }, {
+    "objectGuid" : "92TQndHw9hvjJrQafpLX2R",
+    "objectName" : "Default",
+    "objectType" : "Project",
+    "path" : "/Explore",
+    "providerName" : null,
+    "metadata" : {
+      "modelVersion" : {
+        "major" : 0,
+        "minor" : 0
+      },
+      "repoInfo" : null,
+      "objectRefs" : [ ],
+      "contextAttributes" : [ {
+        "name" : "IS_DEF_LOC",
+        "value" : "true"
+      } ],
+      "additionalInfo" : {
+        "description" : "Auto-generated Default Project",
+        "contentType" : null,
+        "documentState" : "COMPLETE"
+      }
+    }
+  } ]
+}

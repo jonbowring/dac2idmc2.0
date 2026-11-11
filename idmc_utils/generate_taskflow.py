@@ -3,6 +3,7 @@ import uuid
 import shortuuid
 import re
 import logging
+import numpy as np # 20261111 added for data type checking
 
 def add_task(parent, infa_id, step_id, step_name, next_id, create_link):
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer" element
@@ -305,7 +306,7 @@ def add_task(parent, infa_id, step_id, step_name, next_id, create_link):
         getResponse_Item_Entry_taskflow_flow_eventContainer_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer, "link", attrib={
             #"id": str(uuid.uuid4()).replace('-',''),
             "id": "link" + shortuuid.uuid()[:8],
-            "targetId": targetId if targetId is not None else 'end'
+            "targetId": str(targetId) if targetId is not None else 'end' # 20261111 corrected data type casting
         })
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/events" element
@@ -564,7 +565,7 @@ def add_cmd(parent, step_id, step_name, next_id, runtime_id, runtime_guid, runti
         targetId = next_id
         getResponse_Item_Entry_taskflow_flow_eventContainer_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_eventContainer, "link", attrib={
             "id": "link" + shortuuid.uuid()[:8],
-            "targetId": targetId if targetId is not None else 'end'
+            "targetId": str(targetId) if targetId is not None and not np.isnan(targetId) else 'end' # 20261111 corrected data type casting
         })
 
     # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/eventContainer/events" element
@@ -615,7 +616,7 @@ def add_subtaskflow(parent, infa_id, step_id, step_name, next_id, create_link):
         targetId = next_id
         getResponse_Item_Entry_taskflow_flow_subflow_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_subflow, "link", attrib={
             "id": "link" + shortuuid.uuid()[:8],
-            "targetId": targetId if targetId is not None else 'end'
+            "targetId": str(targetId) if targetId is not None else 'end'
         })
 
 def generate_taskflow(taskflowID, taskflowName, dfPlan, config):
@@ -1108,7 +1109,7 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan, config):
     targetId = dfPlan.iloc[0]['dac2idmc_group_id'] if isParallel else dfPlan.iloc[0]['dac2idmc_step_id']
     getResponse_Item_Entry_taskflow_flow_end = etree.SubElement(getResponse_Item_Entry_taskflow_flow_start, "link", attrib={
         "id": "link" + shortuuid.uuid()[:8],
-        "targetId": targetId if targetId is not None else 'end'
+        "targetId": str(targetId) if targetId is not None else 'end'
     })
 
     ######################################################################################
@@ -1194,7 +1195,7 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan, config):
                 # Create the "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/container/flow/link" element
                 getResponse_Item_Entry_taskflow_flow_container_flow_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_container_flow, "link", attrib={
                     "id": "link" + shortuuid.uuid()[:8],
-                    "targetId": groupId,
+                    "targetId": str(groupId),
                     "type": "containerLink"
                 })
 
@@ -1215,7 +1216,7 @@ def generate_taskflow(taskflowID, taskflowName, dfPlan, config):
             # Create the final connecting "/aetgt:getResponse/types1:Item/types1:Entry/taskflow/flow/container/link" element
             getResponse_Item_Entry_taskflow_flow_container_flow_link = etree.SubElement(getResponse_Item_Entry_taskflow_flow_container, "link", attrib={
                 "id": "link" + shortuuid.uuid()[:8],
-                "targetId": link_id
+                "targetId": str(link_id) # 20261111 corrected data type casting
             })
 
 

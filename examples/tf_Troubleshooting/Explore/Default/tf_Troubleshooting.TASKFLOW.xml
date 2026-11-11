@@ -1,0 +1,257 @@
+<aetgt:getResponse xmlns:aetgt="http://schemas.active-endpoints.com/appmodules/repository/2010/10/avrepository.xsd"
+    xmlns:types1="http://schemas.active-endpoints.com/appmodules/repository/2010/10/avrepository.xsd">
+    <types1:Item>
+        <types1:EntryId>WIsoZduD2L5SeE1-gt-152915-2026-11-11T02:20:51.778Z::tf.xml</types1:EntryId>
+        <types1:Name>tf_Troubleshooting</types1:Name>
+        <types1:MimeType>application/xml+taskflow</types1:MimeType>
+        <types1:Description/>
+        <types1:AppliesTo/>
+        <types1:Tags/>
+        <types1:VersionLabel>1.0</types1:VersionLabel>
+        <types1:State>CURRENT</types1:State>
+        <types1:ProcessGroup/>
+        <types1:CreatedBy>jbowring_APJS_tspod_SO</types1:CreatedBy>
+        <types1:CreationDate>2026-11-11T02:20:52Z</types1:CreationDate>
+        <types1:ModifiedBy/>
+        <types1:PublicationStatus>unpublished</types1:PublicationStatus>
+        <types1:Entry>
+            <taskflow xmlns="http://schemas.active-endpoints.com/appmodules/screenflow/2010/10/avosScreenflow.xsd"
+                xmlns:tfm="http://schemas.active-endpoints.com/appmodules/screenflow/2021/04/taskflowModel.xsd"
+                xmlns:list="urn:activevos:spi:list:functions" GUID="66ekwf9r5J3kmvnOYBu8cL" assetLocation="Default" displayName="tf_Troubleshooting" name="tf_Troubleshooting" overrideAPIName="false">
+                <parameterSet xmlns="http://schemas.active-endpoints.com/appmodules/screenflow/2021/04/taskflowModel.xsd"/>
+                <appliesTo/>
+                <description/>
+                <tags/>
+                <generator>Informatica Process Designer 11</generator>
+                <tempFields>
+                    <field description="" name="SDE_ORA_EmployeeDailySnapshotFact_2" type="reference">
+                        <options>
+                            <option name="referenceTo">$po:InternalInfaSubTaskflowField</option>
+                            <option name="failOnNotRun">false</option>
+                            <option name="failOnFault">false</option>
+                        </options>
+                    </field>
+                    <field description="" name="SDE_ORA_EmployeeDailySnapshotFact_3" type="reference">
+                        <options>
+                            <option name="referenceTo">$po:InternalInfaSubTaskflowField</option>
+                            <option name="failOnNotRun">false</option>
+                            <option name="failOnFault">false</option>
+                        </options>
+                    </field>
+                    <field description="" name="SDE_ORA_EmployeeDailySnapshotFact_4" type="reference">
+                        <options>
+                            <option name="referenceTo">$po:InternalInfaSubTaskflowField</option>
+                            <option name="failOnNotRun">false</option>
+                            <option name="failOnFault">false</option>
+                        </options>
+                    </field>
+                    <field description="" name="TASK_GROUP_Extract_EmployeeDailySnapshotFact_Performance_Review" type="reference">
+                        <options>
+                            <option name="referenceTo">$po:InternalInfaSubTaskflowField</option>
+                            <option name="failOnNotRun">false</option>
+                            <option name="failOnFault">false</option>
+                        </options>
+                    </field>
+                    <field description="" name="SDE_ORA_EmployeeDailySnapshotFact_1" type="reference">
+                        <options>
+                            <option name="referenceTo">$po:InternalInfaSubTaskflowField</option>
+                            <option name="failOnNotRun">false</option>
+                            <option name="failOnFault">false</option>
+                        </options>
+                    </field>
+                    <field description="" name="SDE_ORA_EmployeeDailySnapshotFact_PerformanceReview" type="reference">
+                        <options>
+                            <option name="referenceTo">$po:InternalInfaSubTaskflowField</option>
+                            <option name="failOnNotRun">false</option>
+                            <option name="failOnFault">false</option>
+                        </options>
+                    </field>
+                    <field description="" name="SDE_ORA_EmployeeDailySnapshotFact_1_Update" type="reference">
+                        <options>
+                            <option name="referenceTo">$po:InternalInfaSubTaskflowField</option>
+                            <option name="failOnNotRun">false</option>
+                            <option name="failOnFault">false</option>
+                        </options>
+                    </field>
+                    <field description="" name="SDE_ORA_EmployeeDailySnapshotFact" type="reference">
+                        <options>
+                            <option name="referenceTo">$po:InternalInfaSubTaskflowField</option>
+                            <option name="failOnNotRun">false</option>
+                            <option name="failOnFault">false</option>
+                        </options>
+                    </field>
+                    <field description="" name="SIL_EmployeeDailySnapshotFact" type="reference">
+                        <options>
+                            <option name="referenceTo">$po:InternalInfaSubTaskflowField</option>
+                            <option name="failOnNotRun">false</option>
+                            <option name="failOnFault">false</option>
+                        </options>
+                    </field>
+                    <field description="" name="PLP_EmployeeDailySnapshot_Trim" type="reference">
+                        <options>
+                            <option name="referenceTo">$po:InternalInfaSubTaskflowField</option>
+                            <option name="failOnNotRun">false</option>
+                            <option name="failOnFault">false</option>
+                        </options>
+                    </field>
+                    <field description="" name="PLP_EmployeeMonthlySnapshot" type="reference">
+                        <options>
+                            <option name="referenceTo">$po:InternalInfaSubTaskflowField</option>
+                            <option name="failOnNotRun">false</option>
+                            <option name="failOnFault">false</option>
+                        </options>
+                    </field>
+                </tempFields>
+                <notes/>
+                <deployment skipIfRunning="false" suspendOnFault="false" tracingLevel="verbose">
+                    <rest/>
+                </deployment>
+                <extData>
+                    <nvpair name="treatEmptyStringAsNotNull">false</nvpair>
+                    <nvpair name="treatEmptyObjectListAsArray">false</nvpair>
+                </extData>
+                <flow id="a">
+                    <start id="b">
+                        <link id="mwbhnw5w" targetId="mwbhnw5v"/>
+                    </start>
+                    <container id="mwbhnw5v" type="parallel">
+                        <title>Parallel Paths 1</title>
+                        <flow id="mwbhnw5z">
+                            <subflow id="mwbhnw6l">
+                                <title>SDE_ORA_EmployeeDailySnapshotFact_2</title>
+                                <subflowGUID>2L1hN51i4Fjcu7b5kt2YkQ</subflowGUID>
+                                <subflowPath>SDE_ORA_EmployeeDailySnapshotFact_2</subflowPath>
+                                <runForEach>false</runForEach>
+                                <input/>
+                                <outputDef/>
+                            </subflow>
+                            <link id="mwbhnw60" targetId="mwbhnw5v" type="containerLink"/>
+                        </flow>
+                        <flow id="mwbhnw62">
+                            <subflow id="mwbhnw6y">
+                                <title>SDE_ORA_EmployeeDailySnapshotFact_3</title>
+                                <subflowGUID>5WanDX0ORyHio3XtJuUyEk</subflowGUID>
+                                <subflowPath>SDE_ORA_EmployeeDailySnapshotFact_3</subflowPath>
+                                <runForEach>false</runForEach>
+                                <input/>
+                                <outputDef/>
+                            </subflow>
+                            <link id="mwbhnw63" targetId="mwbhnw5v" type="containerLink"/>
+                        </flow>
+                        <flow id="mwbhnw67">
+                            <subflow id="mwbhnw7l">
+                                <title>SDE_ORA_EmployeeDailySnapshotFact_4</title>
+                                <subflowGUID>2XEHprjHmYTihpdRkj5gkf</subflowGUID>
+                                <subflowPath>SDE_ORA_EmployeeDailySnapshotFact_4</subflowPath>
+                                <runForEach>false</runForEach>
+                                <input/>
+                                <outputDef/>
+                            </subflow>
+                            <link id="mwbhnw68" targetId="mwbhnw5v" type="containerLink"/>
+                        </flow>
+                        <flow id="mwbhnw6d">
+                            <subflow id="mwbhnw82">
+                                <title>TASK_GROUP_Extract_EmployeeDailySnapshotFact_Performance_Review</title>
+                                <subflowGUID>6r26q9PzOrujPfecMFGpG7</subflowGUID>
+                                <subflowPath>TASK_GROUP_Extract_EmployeeDailySnapshotFact_Performance_Review</subflowPath>
+                                <runForEach>false</runForEach>
+                                <input/>
+                                <outputDef/>
+                            </subflow>
+                            <link id="mwbhnw6e" targetId="mwbhnw5v" type="containerLink"/>
+                        </flow>
+                        <link id="mwbhnw5y" targetId="mwbhnw5z" type="containerLink"/>
+                        <link id="mwbhnw61" targetId="mwbhnw62" type="containerLink"/>
+                        <link id="mwbhnw66" targetId="mwbhnw67" type="containerLink"/>
+                        <link id="mwbhnw8p" targetId="mwbhnw8o"/>
+                        <link id="mwbhnw6c" targetId="mwbhnw6d" type="containerLink"/>
+                    </container>
+                    <container id="mwbhnw8o" type="parallel">
+                        <title>Parallel Paths 2</title>
+                        <flow id="mwbhnw8s">
+                            <subflow id="mwbhnw95">
+                                <title>SDE_ORA_EmployeeDailySnapshotFact_1</title>
+                                <subflowGUID>4paAgRlg5j4gIEKspXPBEW</subflowGUID>
+                                <subflowPath>SDE_ORA_EmployeeDailySnapshotFact_1</subflowPath>
+                                <runForEach>false</runForEach>
+                                <input/>
+                                <outputDef/>
+                            </subflow>
+                            <link id="mwbhnw8t" targetId="mwbhnw8o" type="containerLink"/>
+                        </flow>
+                        <flow id="mwbhnw8v">
+                            <subflow id="mwbhnw9s">
+                                <title>SDE_ORA_EmployeeDailySnapshotFact_PerformanceReview</title>
+                                <subflowGUID>4ZSfCG33BHIhCkCvHnnvIu</subflowGUID>
+                                <subflowPath>SDE_ORA_EmployeeDailySnapshotFact_PerformanceReview</subflowPath>
+                                <runForEach>false</runForEach>
+                                <input/>
+                                <outputDef/>
+                            </subflow>
+                            <link id="mwbhnw8w" targetId="mwbhnw8o" type="containerLink"/>
+                        </flow>
+                        <link id="mwbhnw8r" targetId="mwbhnw8s" type="containerLink"/>
+                        <link id="mwbhnwag" targetId="mwbhnwaf"/>
+                        <link id="mwbhnw8u" targetId="mwbhnw8v" type="containerLink"/>
+                    </container>
+                    <subflow id="mwbhnwaf">
+                        <title>SDE_ORA_EmployeeDailySnapshotFact_1_Update</title>
+                        <subflowGUID>1UjUHuAA5Q0kpMVwRm3WYF</subflowGUID>
+                        <subflowPath>SDE_ORA_EmployeeDailySnapshotFact_1_Update</subflowPath>
+                        <runForEach>false</runForEach>
+                        <input/>
+                        <outputDef/>
+                        <link id="mwbhnwb5" targetId="mwbhnwb4"/>
+                    </subflow>
+                    <subflow id="mwbhnwb4">
+                        <title>SDE_ORA_EmployeeDailySnapshotFact</title>
+                        <subflowGUID>0zNtXxUpColk7qdliS84yM</subflowGUID>
+                        <subflowPath>SDE_ORA_EmployeeDailySnapshotFact</subflowPath>
+                        <runForEach>false</runForEach>
+                        <input/>
+                        <outputDef/>
+                        <link id="mwbhnwbu" targetId="mwbhnwbt"/>
+                    </subflow>
+                    <subflow id="mwbhnwbt">
+                        <title>SIL_EmployeeDailySnapshotFact</title>
+                        <subflowGUID>h28YobWgcc3jZpdCtJlx8l</subflowGUID>
+                        <subflowPath>SIL_EmployeeDailySnapshotFact</subflowPath>
+                        <runForEach>false</runForEach>
+                        <input/>
+                        <outputDef/>
+                        <link id="mwbhnwcj" targetId="mwbhnwci"/>
+                    </subflow>
+                    <subflow id="mwbhnwci">
+                        <title>PLP_EmployeeDailySnapshot_Trim</title>
+                        <subflowGUID>0sG5mHOiS8Qe76B0UuO4u3</subflowGUID>
+                        <subflowPath>PLP_EmployeeDailySnapshot_Trim</subflowPath>
+                        <runForEach>false</runForEach>
+                        <input/>
+                        <outputDef/>
+                        <link id="mwbhnwd8" targetId="mwbhnwd7"/>
+                    </subflow>
+                    <subflow id="mwbhnwd7">
+                        <title>PLP_EmployeeMonthlySnapshot</title>
+                        <subflowGUID>ePtCNUwjemEiZpbcjlsxss</subflowGUID>
+                        <subflowPath>PLP_EmployeeMonthlySnapshot</subflowPath>
+                        <runForEach>false</runForEach>
+                        <input/>
+                        <outputDef/>
+                        <link id="mwbhnwd9" targetId="c"/>
+                    </subflow>
+                    <end id="c"/>
+                </flow>
+                <dependencies>
+                    <processObject xmlns="http://schemas.active-endpoints.com/appmodules/screenflow/2011/06/avosHostEnvironment.xsd" displayName="InternalInfaSubTaskflowField" isByCopy="true" name="InternalInfaSubTaskflowField">
+                        <description>This process object represents a subtaskflow type reference field.</description>
+                        <tags/>
+                        <detail/>
+                    </processObject>
+                </dependencies>
+            </taskflow>
+        </types1:Entry>
+        <types1:GUID>66ekwf9r5J3kmvnOYBu8cL</types1:GUID>
+        <types1:DisplayName>tf_Troubleshooting</types1:DisplayName>
+    </types1:Item>
+    <types1:CurrentServerDateTime>2026-11-11T02:21:12.947Z</types1:CurrentServerDateTime>
+</aetgt:getResponse>
